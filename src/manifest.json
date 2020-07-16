@@ -1,0 +1,42 @@
+{
+  "version": "1.0.3",
+  "manifest_version": 2,
+  "name": "PandaManger",
+  "short_name": "PandaManger",
+  "description": "A tool to manage accept links for Amazon's Mechanical Turk",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.mturk.com/projects*"
+      ],
+      "js": [
+        "lib/js/browser-polyfill.js",
+        "content.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "lib/js/browser-polyfill.js",
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "img/icon.png",
+    "default_title": "Panda Manager",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "downloads",
+    "storage",
+    "https://*.mturk.com/"
+  ],
+  "icons": {
+    "128": "img/icon.png"
+  },
+  "options_ui": {
+    "page": "./options.html",
+    "open_in_tab": true
+  }
+}
