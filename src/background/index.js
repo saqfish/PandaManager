@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-
 import PMSettings from "./settings";
 import PMAudio from "./audio/audios";
 
@@ -30,7 +29,7 @@ const dispatcher = value => {
       [messages.initPopup]: () => {
         resolve({
           theme: settingsValues().theme,
-          values: settingsValues()
+          data: settingsValues()
         });
       },
       [messages.initOptions]: () => {
@@ -107,10 +106,6 @@ async function background() {
           .then(res => resolve(res))
           .catch(res => reject(res));
       })
-  );
-  browser.browserAction.onClicked.addListener(
-    () => {}
-    // open(settingsValues().inTab, "main.html")
   );
 }
 
