@@ -28,8 +28,6 @@ const ListTable = props => {
   const [list, setList] = useState(props.data.pandas);
   const loadedRef = useRef(false);
 
-  console.log(props);
-
   const sendList = list =>
     sendToBackground(messages.setSettingsValues, { pandas: list });
 

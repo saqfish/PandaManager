@@ -1,6 +1,6 @@
 import React from "react";
 
-import LogAppBar from "./LogAppBar";
+import LogAppBar from "./LogAppBar/LogAppBar";
 
 const Log = () => {
   return (

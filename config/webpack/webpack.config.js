@@ -88,11 +88,11 @@ module.exports = function (webpackEnv) {
         constants$: path.resolve("src/background/constants.js"),
 
         mainConstants$: path.resolve("src/main/constants.js"),
-        mainContext$: path.resolve("src/main/components/Context.js"),
+        mainContext$: path.resolve("src/main/components/context.js"),
         mainUtils$: path.resolve("src/main/util.js"),
 
         optionsConstants$: path.resolve("src/options/constants.js"),
-        optionsContext$: path.resolve("src/options/components/Context.js"),
+        optionsContext$: path.resolve("src/options/components/context.js"),
 
         manifest$: path.resolve("src/manifest.json"),
         miscUtils: path.resolve("src/misc/util.js"),

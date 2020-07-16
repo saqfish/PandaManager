@@ -20,17 +20,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import { messages } from "constants";
+import style  from "./styles";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex"
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3)
-  },
-  toolbar: theme.mixins.toolbar
-}));
+const useStyles = makeStyles(theme => (style(theme)));
 
 const Options = props => {
   const [settings, setSettings] = useState(props.data);

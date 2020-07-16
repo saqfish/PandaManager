@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles(theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    color: "white",
     backgroundColor: theme.palette.type == "dark" ? "#121212" : "#3f51b5"
   },
   saveButton: {
