@@ -8,15 +8,28 @@ const tableStyles = {
   style: {
     display: "flex",
     flexDirection: "column",
-    overflowY: "auto",
+    overflowY: "auto"
   },
   headerStyle: {
     display: "none",
     position: "sticky",
-    top: 0,
+    top: 0
+  },
+  rowStyle: {
+    display: "none",
+    position: "sticky",
+    top: 0
+  },
+  cardContainerStyle: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  cardStyle: {
+    margin: "10px",
   },
   actions: {
-    maxWidth: "20px",
+    maxWidth: "20px"
   },
   name: {
     maxWidth: "30vw",

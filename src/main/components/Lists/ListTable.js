@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { Alert } from "@material-ui/lab";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
 
 import MaterialTable, { MTableBody, MTableToolbar } from "material-table";
 
@@ -18,7 +20,9 @@ import {
   Edit,
   Delete,
   Save,
-  Cancel
+  Cancel,
+  List,
+  ListAlt,
 } from "@material-ui/icons";
 
 import { containerStyle, tableStyles } from "./styles";
@@ -26,12 +30,13 @@ import { containerStyle, tableStyles } from "./styles";
 const ListTable = props => {
   const [bottomBarVisible, setBottomBarVisible] = useState(false);
   const [list, setList] = useState(props.data.pandas);
+  const [rowDisplay, setRowDisplay] = useState(false);
   const loadedRef = useRef(false);
 
   const sendList = list =>
     sendToBackground(messages.setSettingsValues, { pandas: list });
 
-  const { style, headerStyle, name, metadata } = tableStyles;
+  const { style, headerStyle, cardContainerStyle, cardStyle, name, metadata } = tableStyles;
 
   const tableIcons = {
     Add,
@@ -95,13 +100,19 @@ const ListTable = props => {
                 : rowData.metadata
           }
         ]}
+        actions={[
+          {
+            icon: rowDisplay ? List : ListAlt,
+            isFreeAction: true,
+            onClick: () => setRowDisplay(!rowDisplay)
+          }
+        ]}
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
               const isListed = checkList(newData.name, list);
               setTimeout(() => {
                 if (!isListed) {
-                  console.log(newData);
                   setList(prev => [
                     ...prev,
                     {
@@ -120,7 +131,8 @@ const ListTable = props => {
                 setList(prev =>
                   prev.map((value, index) =>
                     index == oldData.tableData.id
-                      ? { name: newData.name, tableData: { id: oldData.tableData.id } } : value
+                      ? { name: newData.name, tableData: { id: oldData.tableData.id } }
+                      : value
                   )
                 );
                 resolve();
@@ -138,8 +150,20 @@ const ListTable = props => {
           Toolbar: props =>
             bottomBarVisible ? <MTableToolbar {...props} /> : null,
           Body: props => {
+            console.log(props.renderData);
             const isEditing = props.hasAnyEditingRow;
-            const tableBody = <MTableBody {...props} />;
+            const cards = (
+              <div style={cardContainerStyle}>
+                {props.renderData.map(data => (
+                  <div style={cardStyle}>
+                    <Card>
+                      <CardHeader title={data.name} />
+                    </Card>
+                  </div>
+                ))}
+              </div>
+            );
+            const tableBody = rowDisplay ? <MTableBody {...props} /> : cards;
             const emptyListAlert = (
               <Alert severity="info">
                 Looks like your panda list is empty. Try adding some items.
