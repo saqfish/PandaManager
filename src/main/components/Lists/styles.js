@@ -27,7 +27,7 @@ const tableStyles = {
     maxWidth: "30vw",
     padding: 10
   },
-  metadata: {
+  link: {
     maxWidth: "50vw",
     opacity: 0.3,
     textOverflow: "ellipsis",

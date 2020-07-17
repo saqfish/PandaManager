@@ -9,16 +9,9 @@ import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 import ListsAppBar from "./ListsAppBar";
 import PandaCard from "./PandaCard";
-import MessageDialog from "./MessageDialog";
+import AddDialog from "./AddDialog";
 
-import {
-  Add,
-  Check,
-  Search,
-  Clear,
-  List,
-  ListAlt
-} from "@material-ui/icons";
+import { Add, Check, Search, Clear, List, ListAlt } from "@material-ui/icons";
 
 import { containerStyle, tableStyles } from "./styles";
 
@@ -27,7 +20,6 @@ const ListTable = props => {
   const [dialog, setDialog] = useState({ open: false, msg: null });
   const [list, setList] = useState(props.data.pandas);
   const [rowDisplay, setRowDisplay] = useState(false);
-  // const addRef = useRef(null);
   const loadedRef = useRef(false);
 
   const onDialogClose = () => setDialog({ open: false, msg: null });
@@ -35,12 +27,25 @@ const ListTable = props => {
   const sendList = list =>
     sendToBackground(messages.setSettingsValues, { pandas: list });
 
+  const addToList = item =>
+    setList(prev => [
+      ...prev,
+      {
+        name: item.name,
+        link: item.link,
+        tableData: { id: list.length }
+      }
+    ]);
+
+  const removeFromList = item =>
+    setList(prev => prev.filter(value => value != item));
+
   const {
     style,
     headerStyle,
     cardContainerStyle,
     name,
-    metadata
+    link
   } = tableStyles;
 
   const tableIcons = {
@@ -48,7 +53,7 @@ const ListTable = props => {
     Check,
     Clear,
     Search,
-    ResetSearch: Clear,
+    ResetSearch: Clear
   };
 
   useEffect(() => {
@@ -93,12 +98,12 @@ const ListTable = props => {
           },
           {
             title: "Metadata",
-            field: "metadata",
-            cellStyle: metadata,
+            field: "link",
+            cellStyle: link,
             render: rowData =>
               typeof rowData.data != "undefined"
                 ? `${rowData.data.requester_name} - ${rowData.data.title}`
-                : rowData.metadata
+                : rowData.link
           }
         ]}
         actions={[
@@ -119,12 +124,11 @@ const ListTable = props => {
           Toolbar: props =>
             bottomBarVisible ? <MTableToolbar {...props} /> : null,
           Body: props => {
-            console.log(props.renderData);
             const isEditing = props.hasAnyEditingRow;
             const cards = (
               <div style={cardContainerStyle}>
                 {props.renderData.map(data => (
-                  <PandaCard data={data} />
+                  <PandaCard data={data} func={{removeFromList}} />
                 ))}
               </div>
             );
@@ -144,7 +148,7 @@ const ListTable = props => {
         }}
       />
       <Dialog open={dialog.open} onClose={onDialogClose}>
-        <MessageDialog data={dialog.msg} list={{list,setList}} func={onDialogClose} />
+        <AddDialog func={{ addToList, onDialogClose }} />
       </Dialog>
     </div>
   );

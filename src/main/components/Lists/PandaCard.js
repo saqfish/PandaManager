@@ -14,6 +14,7 @@ import { cardStyles } from "./styles";
 
 const PandaCard = props => {
   const { data } = props;
+  const { removeFromList } = props.func;
 
   const { container } = cardStyles;
   const useStyles = makeStyles(cardStyles);
@@ -30,12 +31,16 @@ const PandaCard = props => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="delete" classes= {{root: classes.deleteButton}}>
+            <IconButton
+              onClick={() => removeFromList(data)}
+              aria-label="delete"
+              classes={{ root: classes.deleteButton }}
+            >
               <DeleteIcon />
             </IconButton>
           }
           title={data.name}
-          subheader={"Some panda timer information will go here.Some panda timer information will go here.Some panda timer information will go here.Some panda timer information will go here.Some panda timer information will go here."}
+          subheader={data.link}
           classes={{ title: classes.title, subheader: classes.subheader }}
         />
         <CardActions>

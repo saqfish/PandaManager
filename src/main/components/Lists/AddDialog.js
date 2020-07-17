@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,8 +18,9 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { messageDialogStyles } from "./styles";
 
 const AddDialog = props => {
-  const { data: message } = props;
-  const { func: close } = props;
+  const { onDialogClose: close, addToList } = props.func;
+
+  const [item, setItem] = useState({ name: "", link: "" });
 
   const DialogButton = withStyles(messageDialogStyles.closeButton)(Button);
   const DialogCardActions = withStyles(messageDialogStyles.cardActions)(
@@ -28,8 +29,12 @@ const AddDialog = props => {
 
   const useStyles = makeStyles(messageDialogStyles.msgInput);
   const classes = useStyles();
+  const handleRequesterNameChange = event =>
+    setItem(prev => ({ ...prev, name: event.target.value }));
+  const handlePandaLinkChange = event =>
+    setItem(prev => ({ ...prev, link: event.target.value }));
 
-  return message == null ? null : (
+  return (
     <Card>
       <CardHeader
         disableTypography={true}
@@ -52,6 +57,8 @@ const AddDialog = props => {
           <InputBase
             className={classes.input}
             placeholder="Requester Name"
+            value={item.name}
+            onChange={handleRequesterNameChange}
             inputProps={{ "aria-label": "requester name" }}
           />
         </Paper>
@@ -62,13 +69,18 @@ const AddDialog = props => {
           <InputBase
             className={classes.input}
             placeholder="Panda Link"
+            value={item.link}
+            onChange={handlePandaLinkChange}
             inputProps={{ "aria-label": "panda link" }}
           />
         </Paper>
       </CardContent>
       <DialogCardActions>
         <DialogButton
-          onClick={() => console.log('')}
+          onClick={() => {
+            addToList(item);
+            close();
+          }}
           aria-label="close"
         >
           Add
