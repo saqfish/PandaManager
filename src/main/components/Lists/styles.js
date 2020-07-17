@@ -42,16 +42,57 @@ const tableStyles = {
 };
 
 const cardStyles = {
-  cardStyle: {
+  container: {
     margin: "10px"
   },
-  cardHeaderStyle: {
+  root: {
+    backgroundColor: "#27323a"
+  },
+  deleteButton: {
+    padding: 0
+  },
+  title: {
     textOverflow: "ellipsis",
     maxWidth: "100px",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    display: "block"
+  },
+  subheader: {
+    textOverflow: "ellipsis",
+    maxWidth: "150px",
     overflow: "hidden",
     whiteSpace: "nowrap",
     display: "block"
   }
 };
 
-export { containerStyle, tableStyles, cardStyles };
+const messageDialogStyles = {
+  card: {
+    root: {}
+  },
+  cardActions: {
+    root: {
+      justifyContent: "flex-end"
+    }
+  },
+  byeButton: {
+    root: {}
+  },
+  msgInput: {
+    root: {
+      padding: "2px 4px",
+      display: "flex",
+      alignItems: "center",
+      width: 400
+    },
+    input: {
+      flex: 1
+    },
+    iconButton: {
+      padding: 10
+    },
+  }
+};
+
+export { containerStyle, tableStyles, cardStyles, messageDialogStyles };

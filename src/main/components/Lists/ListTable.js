@@ -1,24 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { Alert } from "@material-ui/lab";
+import Dialog from "@material-ui/core/Dialog";
+
 import MaterialTable, { MTableBody, MTableToolbar } from "material-table";
 
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
-import { checkList } from "mainUtils";
-
 import ListsAppBar from "./ListsAppBar";
 import PandaCard from "./PandaCard";
+import MessageDialog from "./MessageDialog";
 
 import {
   Add,
   Check,
   Search,
   Clear,
-  Edit,
-  Delete,
-  Save,
-  Cancel,
   List,
   ListAlt
 } from "@material-ui/icons";
@@ -26,10 +23,14 @@ import {
 import { containerStyle, tableStyles } from "./styles";
 
 const ListTable = props => {
-  const [bottomBarVisible, setBottomBarVisible] = useState(false);
+  const [bottomBarVisible, setBottomBarVisible] = useState(true);
+  const [dialog, setDialog] = useState({ open: false, msg: null });
   const [list, setList] = useState(props.data.pandas);
   const [rowDisplay, setRowDisplay] = useState(false);
+  // const addRef = useRef(null);
   const loadedRef = useRef(false);
+
+  const onDialogClose = () => setDialog({ open: false, msg: null });
 
   const sendList = list =>
     sendToBackground(messages.setSettingsValues, { pandas: list });
@@ -48,10 +49,6 @@ const ListTable = props => {
     Clear,
     Search,
     ResetSearch: Clear,
-    Edit,
-    Delete,
-    Save,
-    Cancel
   };
 
   useEffect(() => {
@@ -108,47 +105,16 @@ const ListTable = props => {
           {
             icon: rowDisplay ? List : ListAlt,
             isFreeAction: true,
+            type: 0,
             onClick: () => setRowDisplay(!rowDisplay)
+          },
+          {
+            icon: Add,
+            type: 1,
+            isFreeAction: true,
+            onClick: () => setDialog({ open: true, msg: "blah" })
           }
         ]}
-        editable={{
-          onRowAdd: newData =>
-            new Promise((resolve, reject) => {
-              const isListed = checkList(newData.name, list);
-              setTimeout(() => {
-                if (!isListed) {
-                  setList(prev => [
-                    ...prev,
-                    {
-                      name: newData.name,
-                      metadata: newData.metadata,
-                      tableData: { id: list.length }
-                    }
-                  ]);
-                } else reject();
-                resolve();
-              }, 100);
-            }),
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                setList(prev =>
-                  prev.map((value, index) =>
-                    index == oldData.tableData.id
-                      ? { name: newData.name, tableData: { id: oldData.tableData.id } } : value
-                  )
-                );
-                resolve();
-              }, 100);
-            }),
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                setList(prev => prev.filter(value => value != oldData));
-                resolve();
-              }, 100);
-            })
-        }}
         components={{
           Toolbar: props =>
             bottomBarVisible ? <MTableToolbar {...props} /> : null,
@@ -177,6 +143,9 @@ const ListTable = props => {
           }
         }}
       />
+      <Dialog open={dialog.open} onClose={onDialogClose}>
+        <MessageDialog data={dialog.msg} list={{list,setList}} func={onDialogClose} />
+      </Dialog>
     </div>
   );
 };

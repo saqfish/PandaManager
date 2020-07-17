@@ -6,26 +6,37 @@ import Switch from "@material-ui/core/Switch";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Clear";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { cardStyles } from "./styles";
 
 const PandaCard = props => {
   const { data } = props;
 
-  const { cardStyle, cardHeaderStyle } = cardStyles;
+  const { container } = cardStyles;
+  const useStyles = makeStyles(cardStyles);
+
+  const classes = useStyles();
 
   return (
-    <div style={cardStyle}>
-      <Card>
+    <div style={container}>
+      <Card classes={{ root: classes.root }}>
         <CardHeader
           avatar={
             <Avatar variant="square" aria-label="timer">
               1
             </Avatar>
           }
+          action={
+            <IconButton aria-label="delete" classes= {{root: classes.deleteButton}}>
+              <DeleteIcon />
+            </IconButton>
+          }
           title={data.name}
-          subheader={data.metadata != undefined ? data.metadata : null}
-          classes={{ title: cardHeaderStyle }}
+          subheader={"Some panda timer information will go here.Some panda timer information will go here.Some panda timer information will go here.Some panda timer information will go here.Some panda timer information will go here."}
+          classes={{ title: classes.title, subheader: classes.subheader }}
         />
         <CardActions>
           <Button size="small">Start</Button>
