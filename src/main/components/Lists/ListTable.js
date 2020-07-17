@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { Alert } from "@material-ui/lab";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-
 import MaterialTable, { MTableBody, MTableToolbar } from "material-table";
 
 import { sendToBackground } from "miscUtils";
@@ -11,6 +8,7 @@ import { messages } from "constants";
 import { checkList } from "mainUtils";
 
 import ListsAppBar from "./ListsAppBar";
+import PandaCard from "./PandaCard";
 
 import {
   Add,
@@ -22,7 +20,7 @@ import {
   Save,
   Cancel,
   List,
-  ListAlt,
+  ListAlt
 } from "@material-ui/icons";
 
 import { containerStyle, tableStyles } from "./styles";
@@ -36,7 +34,13 @@ const ListTable = props => {
   const sendList = list =>
     sendToBackground(messages.setSettingsValues, { pandas: list });
 
-  const { style, headerStyle, cardContainerStyle, cardStyle, name, metadata } = tableStyles;
+  const {
+    style,
+    headerStyle,
+    cardContainerStyle,
+    name,
+    metadata
+  } = tableStyles;
 
   const tableIcons = {
     Add,
@@ -131,8 +135,7 @@ const ListTable = props => {
                 setList(prev =>
                   prev.map((value, index) =>
                     index == oldData.tableData.id
-                      ? { name: newData.name, tableData: { id: oldData.tableData.id } }
-                      : value
+                      ? { name: newData.name, tableData: { id: oldData.tableData.id } } : value
                   )
                 );
                 resolve();
@@ -155,11 +158,7 @@ const ListTable = props => {
             const cards = (
               <div style={cardContainerStyle}>
                 {props.renderData.map(data => (
-                  <div style={cardStyle}>
-                    <Card>
-                      <CardHeader title={data.name} />
-                    </Card>
-                  </div>
+                  <PandaCard data={data} />
                 ))}
               </div>
             );

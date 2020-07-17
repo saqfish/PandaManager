@@ -20,14 +20,6 @@ const tableStyles = {
     position: "sticky",
     top: 0
   },
-  cardContainerStyle: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  cardStyle: {
-    margin: "10px",
-  },
   actions: {
     maxWidth: "20px"
   },
@@ -41,7 +33,25 @@ const tableStyles = {
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
     overflow: "hidden"
+  },
+  cardContainerStyle: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap"
   }
 };
 
-export { containerStyle, tableStyles };
+const cardStyles = {
+  cardStyle: {
+    margin: "10px"
+  },
+  cardHeaderStyle: {
+    textOverflow: "ellipsis",
+    maxWidth: "100px",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    display: "block"
+  }
+};
+
+export { containerStyle, tableStyles, cardStyles };
