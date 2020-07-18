@@ -1,20 +1,19 @@
 import React, { useRef, useState } from "react";
 
-import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import CloseIcon from "@material-ui/icons/Clear";
-import RequesterIcon from "@material-ui/icons/AccountBox";
-import LinkIcon from "@material-ui/icons/Link";
-import DescriptionIcon from "@material-ui/icons/Subject";
+
+import RequesterInput from "./RequesterInput";
+import PandaLinkInput from "./PandaLinkInput";
+import DescriptionInput from "./DescriptionInput";
+import SingleCheck from "./SingleCheck";
+import EnabledCheck from "./EnabledCheck";
 
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
@@ -60,60 +59,11 @@ const DetailDialog = props => {
         }
       />
       <CardContent>
-        <Paper component="form" className={classes.root} elevation={0} square>
-          <RequesterIcon />
-          <InputBase
-            className={classes.input}
-            placeholder="Requester Name"
-            value={item.name}
-            onChange={handleRequesterNameChange}
-            inputProps={{ "aria-label": "requester name" }}
-          />
-        </Paper>
-        <Paper component="form" className={classes.root} elevation={0} square>
-          <LinkIcon />
-          <InputBase
-            className={classes.input}
-            placeholder="Panda Link"
-            value={item.link}
-            onChange={handlePandaLinkChange}
-            inputProps={{ "aria-label": "panda link" }}
-          />
-        </Paper>
-        <Paper component="form" className={classes.root} elevation={0} square>
-          <DescriptionIcon />
-          <InputBase
-            className={classes.input}
-            placeholder="Description"
-            value={item.description}
-            onChange={handleDescriptionChange}
-            inputProps={{ "aria-label": "description" }}
-          />
-        </Paper>
-        <Paper component="form" className={classes.root} elevation={0} square>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={item.single}
-                onChange={handleSingleChange}
-                name="singelCheck"
-              />
-            }
-            label="Single"
-          />
-        </Paper>
-        <Paper component="form" className={classes.root} elevation={0} square>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={item.enabled}
-                onChange={handleEnbledChange}
-                name="enbaledChecked"
-              />
-            }
-            label="Enabled"
-          />
-        </Paper>
+        <RequesterInput data={{value: item.name, classes}} func={handleRequesterNameChange}/>
+        <PandaLinkInput data={{value: item.link, classes}} func={handlePandaLinkChange}/>
+        <DescriptionInput data={{value: item.description, classes}} func={handleDescriptionChange}/>
+        <SingleCheck data={{value: item.single, classes}} func={handleSingleChange}/>
+        <EnabledCheck data={{value: item.enabled, classes}} func={handleEnbledChange}/>
       </CardContent>
       <DialogCardActions>
         <Button
