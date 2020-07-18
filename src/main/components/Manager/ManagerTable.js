@@ -7,10 +7,11 @@ import MaterialTable, { MTableBody, MTableToolbar } from "material-table";
 
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
-import ManagerAppBar from "./ManagerAppBar";
-import PandaCard from "./PandaCard";
-import AddDialog from "./AddDialog";
-import DetailDialog from "./DetailDialog";
+
+import ManagerAppBar from "./ManagerAppBar/ManagerAppBar";
+import PandaCard from "./PandaCard/PandaCard";
+import AddDialog from "./Dialogs/AddDialog";
+import DetailDialog from "./Dialogs/DetailDialog";
 
 import { Check, Search, Clear, List, ListAlt } from "@material-ui/icons";
 
