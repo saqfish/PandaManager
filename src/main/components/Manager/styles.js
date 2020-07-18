@@ -41,37 +41,39 @@ const tableStyles = {
   }
 };
 
-const cardStyles = {
-  container: {
-    margin: "10px"
-  },
-  root: {
-    backgroundColor: "#27323a"
-  },
-  deleteButton: {
-    padding: 0
-  },
-  title: {
-    textOverflow: "ellipsis",
-    maxWidth: "100px",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    display: "block"
-  },
-  subheader: {
-    textOverflow: "ellipsis",
-    maxWidth: "150px",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    display: "block"
-  },
-  description: {
-    textOverflow: "ellipsis",
-    maxWidth: "200px",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    display: "block"
-  }
+const cardStyles = enabled => {
+  return {
+    container: {
+      margin: "10px"
+    },
+    root: {
+      backgroundColor: enabled ? "#263859" : "#4c4c4c"
+    },
+    deleteButton: {
+      padding: 0
+    },
+    title: {
+      textOverflow: "ellipsis",
+      maxWidth: "100px",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      display: "block"
+    },
+    subheader: {
+      textOverflow: "ellipsis",
+      maxWidth: "150px",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      display: "block"
+    },
+    description: {
+      textOverflow: "ellipsis",
+      maxWidth: "200px",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      display: "block"
+    }
+  };
 };
 
 const messageDialogStyles = {
@@ -94,11 +96,12 @@ const messageDialogStyles = {
       width: 400
     },
     input: {
+      marginLeft: 6,
       flex: 1
     },
     iconButton: {
       padding: 10
-    },
+    }
   }
 };
 

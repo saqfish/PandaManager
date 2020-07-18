@@ -33,7 +33,7 @@ const ManagerTable = props => {
     setList(prev => [
       ...prev,
       {
-        ...item, enabled: true,
+        ...item,
         tableData: { id: list.length }
       }
     ]);
