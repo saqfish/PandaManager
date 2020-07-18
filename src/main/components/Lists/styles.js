@@ -64,6 +64,13 @@ const cardStyles = {
     overflow: "hidden",
     whiteSpace: "nowrap",
     display: "block"
+  },
+  description: {
+    textOverflow: "ellipsis",
+    maxWidth: "200px",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    display: "block"
   }
 };
 

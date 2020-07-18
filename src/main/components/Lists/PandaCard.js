@@ -28,7 +28,7 @@ const PandaCard = props => {
         <CardHeader
           avatar={
             <Avatar variant="square" aria-label="timer">
-              1
+              {data.single ? 1 : "+"}
             </Avatar>
           }
           action={
@@ -44,7 +44,11 @@ const PandaCard = props => {
           subheader={data.link}
           classes={{ title: classes.title, subheader: classes.subheader }}
         />
-        <CardContent>{data.description}</CardContent>
+        <CardContent
+          classes={{ root: classes.description }}
+        >
+          {data.description}
+        </CardContent>
         <CardActions>
           <Button size="small">Start</Button>
           <Button onClick={() => showDetails(data)} size="small">
