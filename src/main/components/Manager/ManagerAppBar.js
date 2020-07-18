@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -6,11 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import { views } from "mainConstants";
-
-import { ViewContext } from "mainContext";
-
-import { Timeline, ExpandMore, ExpandLess } from "@material-ui/icons";
+import { ExpandMore, ExpandLess } from "@material-ui/icons";
+import AddButton from "@material-ui/icons/PostAdd";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -30,12 +27,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ListsAppBar = props => {
+const ManagerAppBar = props => {
   const { data, func } = props;
-  const { setBottomBarVisible } = func;
+  const { setBottomBarVisible, setDialog } = func;
   const { title, bottomBarVisible } = data;
-
-  const { setView } = useContext(ViewContext);
 
   const classes = useStyles();
   return (
@@ -45,12 +40,12 @@ const ListsAppBar = props => {
           {title}
         </Typography>
         <div className={classes.toolbarButtons}>
-          <Tooltip title="Hits">
-            <IconButton onClick={() => setView(views.LOG)}>
-              <Timeline />
-            </IconButton>
-          </Tooltip>
-
+          <IconButton
+            onClick={() => setDialog({ open: true, type: 1 })}
+            disableElevation
+          >
+            <AddButton />
+          </IconButton>
           <Tooltip title="More">
             <IconButton onClick={() => setBottomBarVisible(!bottomBarVisible)}>
               {bottomBarVisible ? <ExpandMore /> : <ExpandLess />}
@@ -62,4 +57,4 @@ const ListsAppBar = props => {
   );
 };
 
-export default ListsAppBar;
+export default ManagerAppBar;

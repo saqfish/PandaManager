@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Lists from "./components/Lists/Lists";
+import Manager from "./components/Manager/Manager";
 import Log from "./components/Log/Log";
 
 import { ViewContext } from "mainContext";
@@ -25,10 +25,10 @@ const Main = props => {
 
   const RenderView = props => {
     const { view, data } = props.data;
-    let selectedView = <Lists data={data} />;
+    let selectedView = <Manager data={data} />;
     switch (view) {
       case 0:
-        selectedView = <Lists data={data} />;
+        selectedView = <Manager data={data} />;
         break;
       case 1:
         selectedView = <Log />;

@@ -7,17 +7,17 @@ import MaterialTable, { MTableBody, MTableToolbar } from "material-table";
 
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
-import ListsAppBar from "./ListsAppBar";
+import ManagerAppBar from "./ManagerAppBar";
 import PandaCard from "./PandaCard";
 import AddDialog from "./AddDialog";
 import DetailDialog from "./DetailDialog";
 
-import { Add, Check, Search, Clear, List, ListAlt } from "@material-ui/icons";
+import { Check, Search, Clear, List, ListAlt } from "@material-ui/icons";
 
 import { containerStyle, tableStyles } from "./styles";
 
-const ListTable = props => {
-  const [bottomBarVisible, setBottomBarVisible] = useState(true);
+const ManagerTable = props => {
+  const [bottomBarVisible, setBottomBarVisible] = useState(false);
   const [dialog, setDialog] = useState({ open: false, type: null });
   const [list, setList] = useState(props.data.pandas);
   const [rowDisplay, setRowDisplay] = useState(false);
@@ -57,7 +57,6 @@ const ListTable = props => {
   const { style, headerStyle, cardContainerStyle, name, link } = tableStyles;
 
   const tableIcons = {
-    Add,
     Check,
     Clear,
     Search,
@@ -74,9 +73,9 @@ const ListTable = props => {
 
   return (
     <div style={containerStyle}>
-      <ListsAppBar
+      <ManagerAppBar
         data={{ list, title: "Pandas", bottomBarVisible }}
-        func={{ sendList, setBottomBarVisible }}
+        func={{ setBottomBarVisible, setDialog }}
       />
       <MaterialTable
         icons={tableIcons}
@@ -122,12 +121,6 @@ const ListTable = props => {
             type: 0,
             onClick: () => setRowDisplay(!rowDisplay)
           },
-          {
-            icon: Add,
-            type: 1,
-            isFreeAction: true,
-            onClick: () => setDialog({ open: true, type: 1 })
-          }
         ]}
         components={{
           Toolbar: props =>
@@ -174,4 +167,4 @@ const ListTable = props => {
   );
 };
 
-export default ListTable;
+export default ManagerTable;
