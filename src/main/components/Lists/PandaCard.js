@@ -48,13 +48,15 @@ const PandaCard = props => {
           {data.description}
         </CardContent>
         <CardActions>
-          <Button size="small">Start</Button>
-          <Button onClick={() => showDetails(data)} size="small">
+          <Button variant="contained" color="primary" disableElevation>
+            Start
+          </Button>
+          <Button variant="contained" color="primary" onClick={() => showDetails(data)} disableElevation >
             Details
           </Button>
           <Switch
-            onChange={(event) => {
-              updateInList(data, {...data, enabled: event.target.checked});
+            onChange={event => {
+              updateInList(data, { ...data, enabled: event.target.checked });
             }}
             checked={data.enabled}
             color="primary"
