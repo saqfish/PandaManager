@@ -33,7 +33,7 @@ const ListTable = props => {
     setList(prev => [
       ...prev,
       {
-        ...item,
+        ...item, enabled: true,
         tableData: { id: list.length }
       }
     ]);
@@ -144,7 +144,7 @@ const ListTable = props => {
                 {props.renderData.map(data => (
                   <PandaCard
                     data={data}
-                    func={{ showDetails, removeFromList }}
+                    func={{ showDetails, updateInList, removeFromList }}
                   />
                 ))}
               </div>

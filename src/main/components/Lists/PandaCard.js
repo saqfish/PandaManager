@@ -15,7 +15,7 @@ import { cardStyles } from "./styles";
 
 const PandaCard = props => {
   const { data } = props;
-  const { showDetails, removeFromList } = props.func;
+  const { showDetails, updateInList, removeFromList } = props.func;
 
   const { container } = cardStyles;
   const useStyles = makeStyles(cardStyles);
@@ -44,9 +44,7 @@ const PandaCard = props => {
           subheader={data.link}
           classes={{ title: classes.title, subheader: classes.subheader }}
         />
-        <CardContent
-          classes={{ root: classes.description }}
-        >
+        <CardContent classes={{ root: classes.description }}>
           {data.description}
         </CardContent>
         <CardActions>
@@ -54,7 +52,13 @@ const PandaCard = props => {
           <Button onClick={() => showDetails(data)} size="small">
             Details
           </Button>
-          <Switch checked={true} color="primary" />
+          <Switch
+            onChange={(event) => {
+              updateInList(data, {...data, enabled: event.target.checked});
+            }}
+            checked={data.enabled}
+            color="primary"
+          />
         </CardActions>
       </Card>
     </div>
