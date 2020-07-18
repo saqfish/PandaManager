@@ -10,6 +10,7 @@ import { messages } from "constants";
 import ListsAppBar from "./ListsAppBar";
 import PandaCard from "./PandaCard";
 import AddDialog from "./AddDialog";
+import DetailDialog from "./DetailDialog";
 
 import { Add, Check, Search, Clear, List, ListAlt } from "@material-ui/icons";
 
@@ -17,36 +18,43 @@ import { containerStyle, tableStyles } from "./styles";
 
 const ListTable = props => {
   const [bottomBarVisible, setBottomBarVisible] = useState(true);
-  const [dialog, setDialog] = useState({ open: false, msg: null });
+  const [dialog, setDialog] = useState({ open: false, type: null });
   const [list, setList] = useState(props.data.pandas);
   const [rowDisplay, setRowDisplay] = useState(false);
   const loadedRef = useRef(false);
 
-  const onDialogClose = () => setDialog({ open: false, msg: null });
+  const onDialogClose = () =>
+    setDialog({ open: false, type: null, data: null });
 
   const sendList = list =>
     sendToBackground(messages.setSettingsValues, { pandas: list });
 
-  const addToList = item =>
+  const addToList = item => {
     setList(prev => [
       ...prev,
       {
-        name: item.name,
-        link: item.link,
+        ...item,
         tableData: { id: list.length }
       }
     ]);
+  };
 
   const removeFromList = item =>
     setList(prev => prev.filter(value => value != item));
 
-  const {
-    style,
-    headerStyle,
-    cardContainerStyle,
-    name,
-    link
-  } = tableStyles;
+  const updateInList = (oldItem, newItem) => {
+    setList(prev =>
+      prev.map((value, index) =>
+        index == oldItem.tableData.id
+          ? { ...newItem, tableData: { id: oldItem.tableData.id } }
+          : value
+      )
+    );
+  };
+
+  const showDetails = item => setDialog({ open: true, type: 2, data: item });
+
+  const { style, headerStyle, cardContainerStyle, name, link } = tableStyles;
 
   const tableIcons = {
     Add,
@@ -117,7 +125,7 @@ const ListTable = props => {
             icon: Add,
             type: 1,
             isFreeAction: true,
-            onClick: () => setDialog({ open: true, msg: "blah" })
+            onClick: () => setDialog({ open: true, type: 1 })
           }
         ]}
         components={{
@@ -128,7 +136,10 @@ const ListTable = props => {
             const cards = (
               <div style={cardContainerStyle}>
                 {props.renderData.map(data => (
-                  <PandaCard data={data} func={{removeFromList}} />
+                  <PandaCard
+                    data={data}
+                    func={{ showDetails, removeFromList }}
+                  />
                 ))}
               </div>
             );
@@ -148,7 +159,15 @@ const ListTable = props => {
         }}
       />
       <Dialog open={dialog.open} onClose={onDialogClose}>
-        <AddDialog func={{ addToList, onDialogClose }} />
+        {dialog.type == 1 ? (
+          <AddDialog func={{ addToList, onDialogClose }} />
+        ) : null}
+        {dialog.type == 2 ? (
+          <DetailDialog
+            data={dialog.data}
+            func={{ updateInList, onDialogClose }}
+          />
+        ): null}
       </Dialog>
     </div>
   );

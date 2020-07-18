@@ -14,7 +14,7 @@ import { cardStyles } from "./styles";
 
 const PandaCard = props => {
   const { data } = props;
-  const { removeFromList } = props.func;
+  const { showDetails, removeFromList } = props.func;
 
   const { container } = cardStyles;
   const useStyles = makeStyles(cardStyles);
@@ -45,7 +45,9 @@ const PandaCard = props => {
         />
         <CardActions>
           <Button size="small">Start</Button>
-          <Button size="small">Details</Button>
+          <Button onClick={() => showDetails(data)} size="small">
+            Details
+          </Button>
           <Switch checked={true} color="primary" />
         </CardActions>
       </Card>
