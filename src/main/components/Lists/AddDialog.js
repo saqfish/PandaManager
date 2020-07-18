@@ -8,6 +8,8 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import CloseIcon from "@material-ui/icons/Clear";
 import RequesterIcon from "@material-ui/icons/AccountBox";
@@ -36,6 +38,8 @@ const AddDialog = props => {
     setItem(prev => ({ ...prev, link: event.target.value }));
   const handleDescriptionChange = event =>
     setItem(prev => ({ ...prev, description: event.target.value }));
+  const handleSingleChange = value =>
+    setItem(prev => ({ ...prev, single: value }));
 
   return (
     <Card>
@@ -87,6 +91,18 @@ const AddDialog = props => {
             value={item.description}
             onChange={handleDescriptionChange}
             inputProps={{ "aria-label": "description" }}
+          />
+        </Paper>
+        <Paper component="form" className={classes.root} elevation={0} square>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={item.single}
+                onChange={handleSingleChange}
+                name="singelCheck"
+              />
+            }
+            label="Single"
           />
         </Paper>
       </CardContent>

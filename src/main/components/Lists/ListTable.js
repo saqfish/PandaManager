@@ -113,6 +113,11 @@ const ListTable = props => {
             title: "Description",
             field: "description",
             cellStyle: link,
+          },
+          {
+            title: "Single",
+            field: "single",
+            cellStyle: link,
           }
         ]}
         actions={[
