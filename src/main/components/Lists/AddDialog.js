@@ -29,10 +29,13 @@ const AddDialog = props => {
 
   const useStyles = makeStyles(messageDialogStyles.msgInput);
   const classes = useStyles();
+
   const handleRequesterNameChange = event =>
     setItem(prev => ({ ...prev, name: event.target.value }));
   const handlePandaLinkChange = event =>
     setItem(prev => ({ ...prev, link: event.target.value }));
+  const handleDescriptionChange = event =>
+    setItem(prev => ({ ...prev, description: event.target.value }));
 
   return (
     <Card>
@@ -72,6 +75,18 @@ const AddDialog = props => {
             value={item.link}
             onChange={handlePandaLinkChange}
             inputProps={{ "aria-label": "panda link" }}
+          />
+        </Paper>
+        <Paper component="form" className={classes.root} elevation={0} square>
+          <IconButton className={classes.iconButton} aria-label="menu">
+            <LinkIcon />
+          </IconButton>
+          <InputBase
+            className={classes.input}
+            placeholder="Description"
+            value={item.description}
+            onChange={handleDescriptionChange}
+            inputProps={{ "aria-label": "description" }}
           />
         </Paper>
       </CardContent>

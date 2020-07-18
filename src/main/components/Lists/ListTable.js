@@ -105,13 +105,14 @@ const ListTable = props => {
             cellStyle: name
           },
           {
-            title: "Metadata",
+            title: "Link",
             field: "link",
             cellStyle: link,
-            render: rowData =>
-              typeof rowData.data != "undefined"
-                ? `${rowData.data.requester_name} - ${rowData.data.title}`
-                : rowData.link
+          },
+          {
+            title: "Description",
+            field: "description",
+            cellStyle: link,
           }
         ]}
         actions={[
