@@ -12,6 +12,7 @@ import override from "./overrides";
 
 const Main = props => {
   const data = props.data;
+  const cycling = props.cycling;
   const [view, setView] = useState(0);
 
   const defaultTheme = createMuiTheme();
@@ -24,11 +25,11 @@ const Main = props => {
   const mainTheme = createMuiTheme(theme);
 
   const RenderView = props => {
-    const { view, data } = props.data;
-    let selectedView = <Manager data={data} />;
+    const { view, data, cycling } = props.data;
+    let selectedView = <Manager data={data} cycling={cycling} />;
     switch (view) {
       case 0:
-        selectedView = <Manager data={data} />;
+        selectedView = <Manager data={data} cycling={cycling} />;
         break;
       case 1:
         selectedView = <Log />;
@@ -41,7 +42,7 @@ const Main = props => {
     <ThemeProvider theme={mainTheme}>
       <ViewContext.Provider value={{ view, setView }}>
         <CssBaseline />
-        <RenderView data={{ view, data }} />
+        <RenderView data={{ view, data, cycling }} />
       </ViewContext.Provider>
     </ThemeProvider>
   );

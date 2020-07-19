@@ -13,6 +13,7 @@ browser.runtime
       <Main
         theme={res.theme}
         data={res.data}
+        cycling={res.cycling}
       />,
       document.getElementById("root")
     );

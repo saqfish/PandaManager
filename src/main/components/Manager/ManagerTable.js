@@ -75,7 +75,7 @@ const ManagerTable = props => {
   return (
     <div style={containerStyle}>
       <ManagerAppBar
-        data={{ list, title: "Pandas", bottomBarVisible }}
+        data={{ list, title: "Pandas", bottomBarVisible, cycling: props.cycling }}
         func={{ setBottomBarVisible, setDialog }}
       />
       <MaterialTable

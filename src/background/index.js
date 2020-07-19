@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+
 import PMSettings from "./settings";
 import PMAudio from "./audio/audios";
 
@@ -12,6 +13,11 @@ const {
   setSettingsValues
 } = PMSettings();
 
+import { cycler, cycle } from "./cycler/cycler";
+
+console.log(cycler);
+console.log(cycle);
+
 const { loadAudio, setSound, sound } = PMAudio(); // eslint-disable-line
 
 let docsData = { page: 0 };
@@ -23,7 +29,8 @@ const dispatcher = value => {
       [messages.initMain]: () => {
         resolve({
           theme: settingsValues().theme,
-          data: settingsValues()
+          data: settingsValues(),
+          cycling: cycler.cycling()
         });
       },
       [messages.initPopup]: () => {
@@ -42,6 +49,12 @@ const dispatcher = value => {
         resolve({
           theme: settingsValues().theme,
           data: docsData
+        });
+      },
+      [messages.cycle]: () => {
+        cycler.toggle();
+        cycle().then(cycling => {
+          resolve(cycling);
         });
       },
       [messages.openDocs]: data => {

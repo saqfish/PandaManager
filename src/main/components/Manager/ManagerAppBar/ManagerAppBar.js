@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,8 +8,13 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 import { ExpandMore, ExpandLess } from "@material-ui/icons";
 import AddButton from "@material-ui/icons/PostAdd";
+import PlayButton from "@material-ui/icons/PlayArrow";
+import StopButton from "@material-ui/icons/Stop";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import { sendToBackground } from "miscUtils";
+import { messages } from "constants";
 
 const useStyles = makeStyles(theme => ({
   toolbarStyle: {
@@ -30,9 +35,12 @@ const useStyles = makeStyles(theme => ({
 const ManagerAppBar = props => {
   const { data, func } = props;
   const { setBottomBarVisible, setDialog } = func;
-  const { title, bottomBarVisible } = data;
+  const { title, bottomBarVisible, cycling: cyclingProp } = data;
+
+  const [cycling, setCycling] = useState(cyclingProp);
 
   const classes = useStyles();
+
   return (
     <AppBar elevation={0} position="static">
       <Toolbar className={classes.toolbarStyle} variant="dense">
@@ -40,6 +48,16 @@ const ManagerAppBar = props => {
           {title}
         </Typography>
         <div className={classes.toolbarButtons}>
+          <IconButton
+            onClick={() =>
+              sendToBackground(messages.cycle, {}).then(res =>
+                setCycling(res)
+              )
+            }
+            disableElevation
+          >
+            {cycling ? <StopButton /> : <PlayButton />}
+          </IconButton>
           <IconButton
             onClick={() => setDialog({ open: true, type: 1 })}
             disableElevation
