@@ -16,21 +16,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
-const useStyles = makeStyles(theme => ({
-  toolbarStyle: {
-    flex: 0,
-    color: "white",
-    backgroundColor: theme.palette.type == "dark" ? "#121212" : "#3f51b5"
-  },
-  navigationStyle: {
-    marginRight: theme.spacing(2)
-  },
-  toolbarButtons: {},
-  title: {
-    paddingLeft: 12,
-    flexGrow: 1
-  }
-}));
+import style from "./styles";
+
+const useStyles = makeStyles(theme => style(theme));
 
 const ManagerAppBar = props => {
   const { data, func } = props;

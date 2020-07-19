@@ -24,9 +24,6 @@ const ManagerTable = props => {
   const [rowDisplay, setRowDisplay] = useState(false);
   const loadedRef = useRef(false);
 
-  const onDialogClose = () =>
-    setDialog({ open: false, type: null, data: null });
-
   const sendList = list =>
     sendToBackground(messages.setSettingsValues, { pandas: list });
 
@@ -52,6 +49,9 @@ const ManagerTable = props => {
       )
     );
   };
+
+  const onDialogClose = () =>
+    setDialog({ open: false, type: null, data: null });
 
   const showDetails = item => setDialog({ open: true, type: 2, data: item });
 

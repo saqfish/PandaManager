@@ -15,9 +15,6 @@ const {
 
 import { cycler, cycle } from "./cycler/cycler";
 
-console.log(cycler);
-console.log(cycle);
-
 const { loadAudio, setSound, sound } = PMAudio(); // eslint-disable-line
 
 let docsData = { page: 0 };
