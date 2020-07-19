@@ -19,6 +19,7 @@ import { Check, Search, Clear, List, ListAlt } from "@material-ui/icons";
 import { containerStyle, tableStyles } from "./styles";
 
 const ManagerTable = props => {
+  const [cycling, setCycling] = useState(props.cycling);
   const [bottomBarVisible, setBottomBarVisible] = useState(false);
   const [dialog, setDialog] = useState({ open: false, type: null });
   const [list, setList] = useState(props.data.pandas);
@@ -90,9 +91,9 @@ const ManagerTable = props => {
           list,
           title: "Pandas",
           bottomBarVisible,
-          cycling: props.cycling
+          cycling
         }}
-        func={{ setBottomBarVisible, setDialog }}
+        func={{ setBottomBarVisible, setDialog, setCycling }}
       />
       <MaterialTable
         icons={tableIcons}
@@ -148,7 +149,7 @@ const ManagerTable = props => {
               <div style={cardContainerStyle}>
                 {props.renderData.map(data => (
                   <PandaCard
-                    data={data}
+                    data={{data, cycling}}
                     func={{ showDetails, updateInList, removeFromList }}
                   />
                 ))}

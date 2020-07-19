@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -22,10 +22,8 @@ const useStyles = makeStyles(theme => style(theme));
 
 const ManagerAppBar = props => {
   const { data, func } = props;
-  const { setBottomBarVisible, setDialog } = func;
-  const { title, bottomBarVisible, cycling: cyclingProp } = data;
-
-  const [cycling, setCycling] = useState(cyclingProp);
+  const { setBottomBarVisible, setDialog, setCycling } = func;
+  const { title, bottomBarVisible, cycling } = data;
 
   const classes = useStyles();
 
@@ -38,15 +36,17 @@ const ManagerAppBar = props => {
         <div className={classes.toolbarButtons}>
           <IconButton
             onClick={() =>
-              sendToBackground(messages.cycle, {}).then(res =>
-                setCycling(res)
-              )
+              sendToBackground(messages.cycle, {}).then(res => {
+                console.log(res);
+                setCycling(res);
+              })
             }
             disableElevation
           >
             {cycling ? <StopButton /> : <PlayButton />}
           </IconButton>
           <IconButton
+            disabled={cycling}
             onClick={() => setDialog({ open: true, type: 1 })}
             disableElevation
           >

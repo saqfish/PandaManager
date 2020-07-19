@@ -24,9 +24,13 @@ const cycler = {
 };
 
 const cycle = pandas => {
+  send(pandas, client);
+
   return new Promise(async resolve => {
     clearTimeout(timeout);
     timeout = null;
+
+    resolve(cycling);
 
     if (cycling) {
       console.log(`cycle ${timeout}`);
@@ -45,7 +49,6 @@ const cycle = pandas => {
       clearSelected(pandas);
       send(pandas, client);
     }
-    resolve(cycling);
   });
 };
 

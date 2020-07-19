@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { cardStyles } from "./styles";
 
 const PandaCard = props => {
-  const { data } = props;
+  const { data, cycling } = props.data;
   const { showDetails, updateInList, removeFromList } = props.func;
 
   const { container } = cardStyles(data.enabled, data.selected);
@@ -33,6 +33,7 @@ const PandaCard = props => {
           }
           action={
             <IconButton
+              disabled={cycling}
               onClick={() => removeFromList(data)}
               aria-label="delete"
               classes={{ root: classes.deleteButton }}
@@ -48,13 +49,25 @@ const PandaCard = props => {
           {data.description}
         </CardContent>
         <CardActions>
-          <Button variant="contained" color="primary" disableElevation>
+          <Button
+            disabled={cycling}
+            variant="contained"
+            color="primary"
+            disableElevation
+          >
             Start
           </Button>
-          <Button variant="contained" color="primary" onClick={() => showDetails(data)} disableElevation >
+          <Button
+            disabled={cycling}
+            variant="contained"
+            color="primary"
+            onClick={() => showDetails(data)}
+            disableElevation
+          >
             Details
           </Button>
           <Switch
+            disabled={cycling}
             onChange={event => {
               updateInList(data, { ...data, enabled: event.target.checked });
             }}
