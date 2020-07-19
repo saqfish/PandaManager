@@ -1,10 +1,12 @@
-const cardStyles = enabled => {
+const cardStyles = (enabled, selected) => {
   return {
     container: {
       margin: "10px"
     },
     root: {
-      backgroundColor: enabled ? "#263859" : "#4c4c4c"
+      backgroundColor: enabled
+        ? selected ? "#055e68" : "#263859"
+        : selected ? "#055e68" : "#4c4c4c"
     },
     deleteButton: {
       padding: 0
@@ -33,4 +35,4 @@ const cardStyles = enabled => {
   };
 };
 
-export {cardStyles};
+export { cardStyles };

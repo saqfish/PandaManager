@@ -24,6 +24,12 @@ const dispatcher = value => {
   return new Promise(resolve => {
     const dispatch = {
       [messages.initMain]: () => {
+        browser.runtime.onConnect.addListener(function(port) {
+          cycler.setClient(port);
+          port.onDisconnect.addListener(function() {
+            cycler.setClient(null);
+          });
+        });
         resolve({
           theme: settingsValues().theme,
           data: settingsValues(),
@@ -50,7 +56,7 @@ const dispatcher = value => {
       },
       [messages.cycle]: () => {
         cycler.toggle();
-        cycle().then(cycling => {
+        cycle(settingsValues().pandas).then(cycling => {
           resolve(cycling);
         });
       },

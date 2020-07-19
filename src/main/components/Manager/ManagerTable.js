@@ -5,6 +5,7 @@ import Dialog from "@material-ui/core/Dialog";
 
 import MaterialTable, { MTableBody, MTableToolbar } from "material-table";
 
+import * as browser from "webextension-polyfill";
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
@@ -72,10 +73,25 @@ const ManagerTable = props => {
     }
   }, [list]);
 
+  useEffect(() => {
+    var port = browser.runtime.connect({ name: "scrapeConnection" });
+    port.onMessage.addListener(res => {
+      setList(res);
+    });
+    return () => {
+      port.onMessage.removeListener();
+    };
+  }, []);
+
   return (
     <div style={containerStyle}>
       <ManagerAppBar
-        data={{ list, title: "Pandas", bottomBarVisible, cycling: props.cycling }}
+        data={{
+          list,
+          title: "Pandas",
+          bottomBarVisible,
+          cycling: props.cycling
+        }}
         func={{ setBottomBarVisible, setDialog }}
       />
       <MaterialTable
@@ -107,13 +123,13 @@ const ManagerTable = props => {
           {
             title: "Link",
             field: "link",
-            cellStyle: link,
+            cellStyle: link
           },
           {
             title: "Description",
             field: "description",
-            cellStyle: link,
-          },
+            cellStyle: link
+          }
         ]}
         actions={[
           {
@@ -121,7 +137,7 @@ const ManagerTable = props => {
             isFreeAction: true,
             type: 0,
             onClick: () => setRowDisplay(!rowDisplay)
-          },
+          }
         ]}
         components={{
           Toolbar: props =>
@@ -162,7 +178,7 @@ const ManagerTable = props => {
             data={dialog.data}
             func={{ updateInList, onDialogClose }}
           />
-        ): null}
+        ) : null}
       </Dialog>
     </div>
   );

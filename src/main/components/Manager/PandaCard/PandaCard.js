@@ -17,8 +17,8 @@ const PandaCard = props => {
   const { data } = props;
   const { showDetails, updateInList, removeFromList } = props.func;
 
-  const { container } = cardStyles(data.enabled);
-  const useStyles = makeStyles(cardStyles(data.enabled));
+  const { container } = cardStyles(data.enabled, data.selected);
+  const useStyles = makeStyles(cardStyles(data.enabled, data.selected));
 
   const classes = useStyles();
 
