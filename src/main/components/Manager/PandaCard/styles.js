@@ -4,9 +4,7 @@ const cardStyles = (enabled, selected) => {
       margin: "10px"
     },
     root: {
-      backgroundColor: enabled
-        ? selected ? "#055e68" : "#263859"
-        : selected ? "#055e68" : "#4c4c4c"
+      backgroundColor: enabled ? (selected ? "#055e68" : "#263859") : "#4c4c4c"
     },
     deleteButton: {
       padding: 0

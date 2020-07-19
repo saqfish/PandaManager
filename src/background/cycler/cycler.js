@@ -31,11 +31,13 @@ const cycle = pandas => {
     if (cycling) {
       console.log(`cycle ${timeout}`);
       for (let panda of pandas) {
-        panda.selected = true;
-        send(pandas, client);
-        console.log(panda);
-        await sleep(1000);
-        panda.selected = false;
+        if (panda.enabled) {
+          panda.selected = true;
+          send(pandas, client);
+          console.log(panda);
+          await sleep(1000);
+          panda.selected = false;
+        }
       }
       cycle(pandas);
     } else {
