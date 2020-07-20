@@ -18,6 +18,9 @@ const defaults = {
   settings: {
     pandas: [],
     beep: 1,
+    delays: {
+      cycle: 2000
+    },
     inTab: false,
     theme: {
       palette: {

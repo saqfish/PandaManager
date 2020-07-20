@@ -39,7 +39,7 @@ const cycle = pandas => {
           panda.selected = true;
           send(pandas, client);
           console.log(panda);
-          await sleep(1000);
+          await sleep(500);
           panda.selected = false;
         }
       }
