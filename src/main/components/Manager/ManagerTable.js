@@ -1,13 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { Alert } from "@material-ui/lab";
 import Dialog from "@material-ui/core/Dialog";
 
 import MaterialTable, { MTableBody, MTableToolbar } from "material-table";
-
-import * as browser from "webextension-polyfill";
-import { sendToBackground } from "miscUtils";
-import { messages } from "constants";
 
 import ManagerAppBar from "./ManagerAppBar/ManagerAppBar";
 import PandaCard from "./PandaCard/PandaCard";
@@ -16,94 +12,22 @@ import DetailDialog from "./Dialogs/DetailDialog";
 import ManagerToolbar from "./ManagerToolbar/ManagerToolbar";
 
 import Checkbox from "@material-ui/core/Checkbox";
-import { Check, Search, Clear, List, ListAlt } from "@material-ui/icons";
+import { Search, Clear, List, ListAlt } from "@material-ui/icons";
 
+import { managerContext } from "./context";
 import { containerStyle, tableStyles } from "./styles";
 
-const ManagerTable = props => {
-  const [cycling, setCycling] = useState(props.cycling);
+const ManagerTable = () => {
   const [bottomBarVisible, setBottomBarVisible] = useState(false);
-  const [dialog, setDialog] = useState({ open: false, type: null });
-  const [list, setList] = useState(props.data.pandas);
-  const [delays, setDelays] = useState(props.data.delays);
   const [rowDisplay, setRowDisplay] = useState(false);
-  const loadedRef = useRef(false);
+  const [dialog, setDialog] = useState({ open: false, type: null });
 
-  const sendList = values =>
-    sendToBackground(messages.setSettingsValues, { pandas: values });
-
-  const sendDelays = values =>
-    sendToBackground(messages.setSettingsValues, { delays: values });
-
-  const updateDelays = items => {
-    setDelays(items);
-  };
-
-  const addToList = item => {
-    setList(prev => [
-      ...prev,
-      {
-        ...item,
-        tableData: { id: list.length }
-      }
-    ]);
-  };
-
-  const removeFromList = item =>
-    setList(prev => prev.filter(value => value != item));
-
-  const updateInList = (oldItem, newItem) => {
-    setList(prev =>
-      prev.map((value, index) =>
-        index == oldItem.tableData.id
-          ? { ...newItem, tableData: { id: oldItem.tableData.id } }
-          : value
-      )
-    );
-  };
-
-  const onDialogClose = () =>
-    setDialog({ open: false, type: null, data: null });
-
+  const onDialogClose = () => setDialog({ open: false, type: null, data: null });
   const showDetails = item => setDialog({ open: true, type: 2, data: item });
 
-  const {
-    style,
-    toolbarStyle,
-    rowStyle,
-    headerStyle,
-    cardContainerStyle,
-    enabled,
-    name,
-    link,
-    description
-  } = tableStyles;
+  const { cycling, list, setCycling, } = useContext(managerContext);
 
-  const tableIcons = {
-    Check,
-    Clear,
-    Search,
-    ResetSearch: Clear
-  };
-
-  useEffect(() => {
-    if (loadedRef.current) {
-      sendList(list);
-      sendDelays(delays);
-    } else {
-      loadedRef.current = true;
-    }
-  }, [list, delays]);
-
-  useEffect(() => {
-    var port = browser.runtime.connect({ name: "scrapeConnection" });
-    port.onMessage.addListener(res => {
-      setList(res);
-    });
-    return () => {
-      port.onMessage.removeListener();
-    };
-  }, []);
+  const tableIcons = { Clear, Search, ResetSearch: Clear };
 
   return (
     <div style={containerStyle}>
@@ -120,11 +44,11 @@ const ManagerTable = props => {
         icons={tableIcons}
         title="Pandas"
         data={list}
-        style={style}
+        style={tableStyles.style}
         options={{
           showTitle: false,
-          rowStyle: rowStyle,
-          headerStyle: headerStyle,
+          rowStyle: tableStyles.rowStyle,
+          headerStyle: tableStyles.headerStyle,
           detailPanelType: "single",
           padding: "dense",
           paging: false,
@@ -143,25 +67,25 @@ const ManagerTable = props => {
             title: "Enabled",
             field: "enabled",
             render: rowData => <Checkbox checked={rowData.enabled} />,
-            cellStyle: enabled
+            cellStyle: tableStyles.enabled
           },
           {
             align: "left",
             title: "Req name/id, Hit ID",
             field: "name",
-            cellStyle: name
+            cellStyle: tableStyles.name
           },
           {
             align: "left",
             title: "Link",
             field: "link",
-            cellStyle: link
+            cellStyle: tableStyles.link
           },
           {
             align: "left",
             title: "Description",
             field: "description",
-            cellStyle: description
+            cellStyle: tableStyles.description
           }
         ]}
         actions={[
@@ -175,20 +99,17 @@ const ManagerTable = props => {
         components={{
           Toolbar: props =>
             bottomBarVisible ? (
-              <div style={toolbarStyle}>
-                <ManagerToolbar data={delays} func={{ updateDelays }} />
+              <div style={tableStyles.toolbarStyle}>
+                <ManagerToolbar />
                 <MTableToolbar {...props} />
               </div>
             ) : null,
           Body: props => {
             const isEditing = props.hasAnyEditingRow;
             const cards = (
-              <div style={cardContainerStyle}>
+              <div style={tableStyles.cardContainerStyle}>
                 {props.renderData.map(data => (
-                  <PandaCard
-                    data={{ data, cycling }}
-                    func={{ showDetails, updateInList, removeFromList }}
-                  />
+                  <PandaCard data={data} func={showDetails} />
                 ))}
               </div>
             );
@@ -208,14 +129,9 @@ const ManagerTable = props => {
         }}
       />
       <Dialog open={dialog.open} onClose={onDialogClose}>
-        {dialog.type == 1 ? (
-          <AddDialog func={{ addToList, onDialogClose }} />
-        ) : null}
+        {dialog.type == 1 ? <AddDialog close={onDialogClose} /> : null}
         {dialog.type == 2 ? (
-          <DetailDialog
-            data={dialog.data}
-            func={{ updateInList, onDialogClose }}
-          />
+          <DetailDialog data={dialog.data} close={onDialogClose} />
         ) : null}
       </Dialog>
     </div>

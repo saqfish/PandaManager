@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -11,11 +11,15 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Clear";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { managerContext } from "../context";
 import { cardStyles } from "./styles";
 
 const PandaCard = props => {
-  const { data, cycling } = props.data;
-  const { showDetails, updateInList, removeFromList } = props.func;
+  const data = props.data;
+  const showDetails = props.func;
+  const { cycling, updateInList, removeFromList } = useContext(
+    managerContext
+  );
 
   const { container } = cardStyles(data.enabled, data.selected);
   const useStyles = makeStyles(cardStyles(data.enabled, data.selected));

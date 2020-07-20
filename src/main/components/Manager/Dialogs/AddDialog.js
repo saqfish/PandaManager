@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
@@ -17,10 +17,13 @@ import EnabledCheck from "./EnabledCheck";
 
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
+import { managerContext } from "../context";
 import { messageDialogStyles } from "./styles";
 
 const AddDialog = props => {
-  const { onDialogClose: close, addToList } = props.func;
+  const close = props.func;
+
+  const { addToList } = useContext(managerContext);
 
   const [item, setItem] = useState({
     name: "",
