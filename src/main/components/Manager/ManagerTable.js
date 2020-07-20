@@ -11,23 +11,22 @@ import AddDialog from "./Dialogs/AddDialog";
 import DetailDialog from "./Dialogs/DetailDialog";
 import ManagerToolbar from "./ManagerToolbar/ManagerToolbar";
 
-import Checkbox from "@material-ui/core/Checkbox";
-import { Search, Clear, List, ListAlt } from "@material-ui/icons";
+import { List, ListAlt } from "@material-ui/icons";
 
 import { managerContext } from "./context";
 import { containerStyle, tableStyles } from "./styles";
+import { table } from "./values";
 
 const ManagerTable = () => {
   const [bottomBarVisible, setBottomBarVisible] = useState(false);
   const [rowDisplay, setRowDisplay] = useState(false);
   const [dialog, setDialog] = useState({ open: false, type: null });
 
-  const onDialogClose = () => setDialog({ open: false, type: null, data: null });
+  const onDialogClose = () =>
+    setDialog({ open: false, type: null, data: null });
   const showDetails = item => setDialog({ open: true, type: 2, data: item });
 
-  const { cycling, list, setCycling, } = useContext(managerContext);
-
-  const tableIcons = { Clear, Search, ResetSearch: Clear };
+  const { cycling, list, setCycling } = useContext(managerContext);
 
   return (
     <div style={containerStyle}>
@@ -41,53 +40,8 @@ const ManagerTable = () => {
         func={{ setBottomBarVisible, setDialog, setCycling }}
       />
       <MaterialTable
-        icons={tableIcons}
-        title="Pandas"
         data={list}
-        style={tableStyles.style}
-        options={{
-          showTitle: false,
-          rowStyle: tableStyles.rowStyle,
-          headerStyle: tableStyles.headerStyle,
-          detailPanelType: "single",
-          padding: "dense",
-          paging: false,
-          showFirstLastPageButtons: false,
-          addRowPosition: "first"
-        }}
-        localization={{
-          body: { emptyDataSourceMessage: "" },
-          pagination: {
-            labelDisplayedRows: ""
-          }
-        }}
-        columns={[
-          {
-            align: "left",
-            title: "Enabled",
-            field: "enabled",
-            render: rowData => <Checkbox checked={rowData.enabled} />,
-            cellStyle: tableStyles.enabled
-          },
-          {
-            align: "left",
-            title: "Req name/id, Hit ID",
-            field: "name",
-            cellStyle: tableStyles.name
-          },
-          {
-            align: "left",
-            title: "Link",
-            field: "link",
-            cellStyle: tableStyles.link
-          },
-          {
-            align: "left",
-            title: "Description",
-            field: "description",
-            cellStyle: tableStyles.description
-          }
-        ]}
+        {...table}
         actions={[
           {
             icon: rowDisplay ? List : ListAlt,
