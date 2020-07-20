@@ -10,29 +10,41 @@ const tableStyles = {
     flexDirection: "column",
     overflowY: "auto"
   },
+  toolbarStyle: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
   headerStyle: {
     display: "none",
     position: "sticky",
     top: 0
   },
   rowStyle: {
-    display: "none",
-    position: "sticky",
-    top: 0
+    display: "flex",
+    verticalAlign: "center"
   },
-  actions: {
-    maxWidth: "20px"
+  actions: {},
+  enabled: {
+    flex: 0
   },
   name: {
-    maxWidth: "30vw",
-    padding: 10
+    flex: 0,
+    maxWidth: 150,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap"
   },
   link: {
-    maxWidth: "50vw",
-    opacity: 0.3,
+    flex: 0,
+    maxWidth: 150,
+    overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
-    overflow: "hidden"
+    opacity: 0.3
+  },
+  description: {
+    flex: 4,
+    opacity: 0.3
   },
   cardContainerStyle: {
     display: "flex",

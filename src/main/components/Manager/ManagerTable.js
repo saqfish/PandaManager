@@ -13,7 +13,9 @@ import ManagerAppBar from "./ManagerAppBar/ManagerAppBar";
 import PandaCard from "./PandaCard/PandaCard";
 import AddDialog from "./Dialogs/AddDialog";
 import DetailDialog from "./Dialogs/DetailDialog";
+import ManagerToolbar from "./ManagerToolbar/ManagerToolbar";
 
+import Checkbox from "@material-ui/core/Checkbox";
 import { Check, Search, Clear, List, ListAlt } from "@material-ui/icons";
 
 import { containerStyle, tableStyles } from "./styles";
@@ -23,11 +25,19 @@ const ManagerTable = props => {
   const [bottomBarVisible, setBottomBarVisible] = useState(false);
   const [dialog, setDialog] = useState({ open: false, type: null });
   const [list, setList] = useState(props.data.pandas);
+  const [delays, setDelays] = useState(props.data.delays);
   const [rowDisplay, setRowDisplay] = useState(false);
   const loadedRef = useRef(false);
 
-  const sendList = list =>
-    sendToBackground(messages.setSettingsValues, { pandas: list });
+  const sendList = values =>
+    sendToBackground(messages.setSettingsValues, { pandas: values });
+
+  const sendDelays = values =>
+    sendToBackground(messages.setSettingsValues, { delays: values });
+
+  const updateDelays = items => {
+    setDelays(items);
+  };
 
   const addToList = item => {
     setList(prev => [
@@ -57,7 +67,17 @@ const ManagerTable = props => {
 
   const showDetails = item => setDialog({ open: true, type: 2, data: item });
 
-  const { style, headerStyle, cardContainerStyle, name, link } = tableStyles;
+  const {
+    style,
+    toolbarStyle,
+    rowStyle,
+    headerStyle,
+    cardContainerStyle,
+    enabled,
+    name,
+    link,
+    description
+  } = tableStyles;
 
   const tableIcons = {
     Check,
@@ -69,10 +89,11 @@ const ManagerTable = props => {
   useEffect(() => {
     if (loadedRef.current) {
       sendList(list);
+      sendDelays(delays);
     } else {
       loadedRef.current = true;
     }
-  }, [list]);
+  }, [list, delays]);
 
   useEffect(() => {
     var port = browser.runtime.connect({ name: "scrapeConnection" });
@@ -102,6 +123,7 @@ const ManagerTable = props => {
         style={style}
         options={{
           showTitle: false,
+          rowStyle: rowStyle,
           headerStyle: headerStyle,
           detailPanelType: "single",
           padding: "dense",
@@ -117,19 +139,29 @@ const ManagerTable = props => {
         }}
         columns={[
           {
+            align: "left",
+            title: "Enabled",
+            field: "enabled",
+            render: rowData => <Checkbox checked={rowData.enabled} />,
+            cellStyle: enabled
+          },
+          {
+            align: "left",
             title: "Req name/id, Hit ID",
             field: "name",
             cellStyle: name
           },
           {
+            align: "left",
             title: "Link",
             field: "link",
             cellStyle: link
           },
           {
+            align: "left",
             title: "Description",
             field: "description",
-            cellStyle: link
+            cellStyle: description
           }
         ]}
         actions={[
@@ -142,14 +174,19 @@ const ManagerTable = props => {
         ]}
         components={{
           Toolbar: props =>
-            bottomBarVisible ? <MTableToolbar {...props} /> : null,
+            bottomBarVisible ? (
+              <div style={toolbarStyle}>
+                <ManagerToolbar data={delays} func={{ updateDelays }} />
+                <MTableToolbar {...props} />
+              </div>
+            ) : null,
           Body: props => {
             const isEditing = props.hasAnyEditingRow;
             const cards = (
               <div style={cardContainerStyle}>
                 {props.renderData.map(data => (
                   <PandaCard
-                    data={{data, cycling}}
+                    data={{ data, cycling }}
                     func={{ showDetails, updateInList, removeFromList }}
                   />
                 ))}
