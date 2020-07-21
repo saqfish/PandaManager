@@ -8,7 +8,7 @@ const tableIcons = { Clear, Search, ResetSearch: Clear };
 
 const table = {
   title: "Pandas",
-  icons: { tableIcons },
+  icons: tableIcons,
   style: tableStyles.style,
   options: {
     rowStyle: tableStyles.rowStyle,
