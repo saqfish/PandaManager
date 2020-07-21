@@ -21,7 +21,7 @@ import { managerContext } from "../context";
 import { messageDialogStyles } from "./styles";
 
 const AddDialog = props => {
-  const close = props.func;
+  const close = props.close;
 
   const { addToList } = useContext(managerContext);
 
