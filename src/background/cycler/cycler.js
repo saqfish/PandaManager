@@ -23,7 +23,9 @@ const cycler = {
   toggle: () => (cycling = !cycling)
 };
 
-const cycle = pandas => {
+const cycle = values => {
+  console.log(values);
+  const { pandas, delays } = values;
   send(pandas, client);
 
   return new Promise(async resolve => {
@@ -38,12 +40,11 @@ const cycle = pandas => {
         if (panda.enabled) {
           panda.selected = true;
           send(pandas, client);
-          console.log(panda);
-          await sleep(500);
+          await sleep(delays.cycle);
           panda.selected = false;
         }
       }
-      cycle(pandas);
+      cycle(values);
     } else {
       if (innerTimeout) clearTimeout(innerTimeout);
       clearSelected(pandas);
