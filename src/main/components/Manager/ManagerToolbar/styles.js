@@ -1,30 +1,16 @@
-const messageDialogStyles = {
-  card: {
-    root: {}
+const styles = {
+  container: {
+    display: "flex",
+    alignItems: "center"
   },
-  cardActions: {
-    root: {
-      justifyContent: "flex-end"
-    }
+  root: {
+    display: "flex",
+    alignItems: "center"
   },
-  byeButton: {
-    root: {}
-  },
-  msgInput: {
-    root: {
-      padding: "2px 4px",
-      display: "flex",
-      alignItems: "center",
-      width: 400
-    },
-    input: {
-      marginLeft: 6,
-      flex: 1
-    },
-    iconButton: {
-      padding: 10
-    }
+  input: {
+    paddingLeft: 5,
+    width: 80
   }
 };
 
-export { messageDialogStyles };
+export default styles;
