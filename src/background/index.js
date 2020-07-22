@@ -21,7 +21,7 @@ let docsData = { page: 0 };
 
 const dispatcher = value => {
   console.log(value);
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const dispatch = {
       [messages.initMain]: () => {
         browser.runtime.onConnect.addListener(function(port) {
@@ -56,9 +56,11 @@ const dispatcher = value => {
       },
       [messages.cycle]: () => {
         cycler.toggle();
-        cycle(settingsValues()).then(cycling => {
-          resolve(cycling);
-        });
+        cycle(settingsValues())
+          .then(cycling => {
+            resolve(cycling);
+          })
+          .catch(() => reject());
       },
       [messages.openDocs]: data => {
         docsData.page = data;

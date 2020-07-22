@@ -24,32 +24,33 @@ const cycler = {
 };
 
 const cycle = values => {
-  console.log(values);
   const { pandas, delays } = values;
   send(pandas, client);
 
-  return new Promise(async resolve => {
+  return new Promise(async (resolve, reject) => {
     clearTimeout(timeout);
     timeout = null;
 
-    resolve(cycling);
+    if (pandas.length) {
+      resolve(cycling);
 
-    if (cycling) {
-      console.log(`cycle ${timeout}`);
-      for (let panda of pandas) {
-        if (panda.enabled) {
-          panda.selected = true;
-          send(pandas, client);
-          await sleep(delays.cycle);
-          panda.selected = false;
+      if (cycling) {
+        console.log(`cycle ${timeout}`);
+        for (let panda of pandas) {
+          if (panda.enabled) {
+            panda.selected = true;
+            send(pandas, client);
+            await sleep(delays.cycle);
+            panda.selected = false;
+          }
         }
+        cycle(values);
+      } else {
+        if (innerTimeout) clearTimeout(innerTimeout);
+        clearSelected(pandas);
+        send(pandas, client);
       }
-      cycle(values);
-    } else {
-      if (innerTimeout) clearTimeout(innerTimeout);
-      clearSelected(pandas);
-      send(pandas, client);
-    }
+    } else reject();
   });
 };
 

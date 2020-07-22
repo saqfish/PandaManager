@@ -36,10 +36,11 @@ const ManagerAppBar = props => {
         <div className={classes.toolbarButtons}>
           <IconButton
             onClick={() =>
-              sendToBackground(messages.cycle, {}).then(res => {
-                console.log(res);
-                setCycling(res);
-              })
+              sendToBackground(messages.cycle, {})
+                .then(res => {
+                  setCycling(res);
+                })
+                .catch(() => setCycling(false))
             }
             disableElevation
           >
