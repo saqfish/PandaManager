@@ -1,5 +1,6 @@
 import React, { useRef, useContext, useState } from "react";
 
+import { Alert } from "@material-ui/lab";
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -21,7 +22,7 @@ import { managerContext } from "../context";
 import { messageDialogStyles } from "./styles";
 
 const DetailDialog = props => {
-  const close = props.close; 
+  const close = props.close;
   const [item, setItem] = useState(props.data);
   const { updateInList } = useContext(managerContext);
 
@@ -31,8 +32,31 @@ const DetailDialog = props => {
     CardActions
   );
 
+  const errors = { empty: "Fields cannot be empty", link: "Invalid link" };
+
   const useStyles = makeStyles(messageDialogStyles.msgInput);
   const classes = useStyles();
+  const [error, setError] = useState();
+
+  const validateItems = () => {
+    if (
+      item.name.length < 1 ||
+      item.link.length < 1 ||
+      item.description.length < 1
+    ) {
+      setError(errors.empty);
+      return false;
+    }
+    if (
+      !item.link.match(
+        /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks\/accept_random\?ref=w_pl_prvw$/
+      )
+    ) {
+      setError(errors.link);
+      return false;
+    }
+    return true;
+  };
 
   const handleRequesterNameChange = event =>
     setItem(prev => ({ ...prev, name: event.target.value }));
@@ -60,19 +84,38 @@ const DetailDialog = props => {
         }
       />
       <CardContent>
-        <RequesterInput data={{value: item.name, classes}} func={handleRequesterNameChange}/>
-        <PandaLinkInput data={{value: item.link, classes}} func={handlePandaLinkChange}/>
-        <DescriptionInput data={{value: item.description, classes}} func={handleDescriptionChange}/>
-        <SingleCheck data={{value: item.single, classes}} func={handleSingleChange}/>
-        <EnabledCheck data={{value: item.enabled, classes}} func={handleEnbledChange}/>
+        <RequesterInput
+          data={{ value: item.name, classes }}
+          func={handleRequesterNameChange}
+        />
+        <PandaLinkInput
+          data={{ value: item.link, classes }}
+          func={handlePandaLinkChange}
+        />
+        <DescriptionInput
+          data={{ value: item.description, classes }}
+          func={handleDescriptionChange}
+        />
+        <SingleCheck
+          data={{ value: item.single, classes }}
+          func={handleSingleChange}
+        />
+        <EnabledCheck
+          data={{ value: item.enabled, classes }}
+          func={handleEnbledChange}
+        />
+        {error ? <Alert severity="error">{error}</Alert> : null}
       </CardContent>
       <DialogCardActions>
         <Button
+          disabled={item == oldItem.current}
           variant="contained"
           color="primary"
           onClick={() => {
-            updateInList(oldItem.current, item);
-            close();
+            if (validateItems()) {
+              updateInList(oldItem.current, item);
+              close();
+            }
           }}
           aria-label="close"
           disableElevation

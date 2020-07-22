@@ -17,9 +17,7 @@ import { cardStyles } from "./styles";
 const PandaCard = props => {
   const data = props.data;
   const showDetails = props.func;
-  const { cycling, updateInList, removeFromList } = useContext(
-    managerContext
-  );
+  const { cycling, updateInList, removeFromList } = useContext(managerContext);
 
   const { container } = cardStyles(data.enabled, data.selected);
   const useStyles = makeStyles(cardStyles(data.enabled, data.selected));
@@ -46,7 +44,11 @@ const PandaCard = props => {
             </IconButton>
           }
           title={data.name}
-          subheader={data.link}
+          subheader={
+            data.link.match(
+              /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks\/accept_random\?ref=w_pl_prvw$/
+            )[1]
+          }
           classes={{ title: classes.title, subheader: classes.subheader }}
         />
         <CardContent classes={{ root: classes.description }}>

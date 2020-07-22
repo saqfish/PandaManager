@@ -1,5 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 
+import { Alert } from "@material-ui/lab";
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -28,16 +29,42 @@ const AddDialog = props => {
   const [item, setItem] = useState({
     name: "",
     link: "",
+    description: "",
     single: false,
     enabled: true
   });
+
+  const dialogRef = useRef(item);
 
   const DialogCardActions = withStyles(messageDialogStyles.cardActions)(
     CardActions
   );
 
+  const errors = { empty: "Fields cannot be empty", link: "Invalid link" };
+
   const useStyles = makeStyles(messageDialogStyles.msgInput);
   const classes = useStyles();
+  const [error, setError] = useState();
+
+  const validateItems = () => {
+    if (
+      item.name.length < 1 ||
+      item.link.length < 1 ||
+      item.description.length < 1
+    ) {
+      setError(errors.empty);
+      return false;
+    }
+    if (
+      !item.link.match(
+        /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks\/accept_random\?ref=w_pl_prvw$/
+      )
+    ) {
+      setError(errors.link);
+      return false;
+    }
+    return true;
+  };
 
   const handleRequesterNameChange = event =>
     setItem(prev => ({ ...prev, name: event.target.value }));
@@ -85,14 +112,18 @@ const AddDialog = props => {
           data={{ value: item.enabled, classes }}
           func={handleEnbledChange}
         />
+        {error ? <Alert severity="error">{error}</Alert> : null}
       </CardContent>
       <DialogCardActions>
         <Button
+          disabled={item == dialogRef.current}
           variant="contained"
           color="primary"
           onClick={() => {
-            addToList(item);
-            close();
+            if (validateItems()) {
+              addToList(item);
+              close();
+            }
           }}
           aria-label="close"
           disableElevation
