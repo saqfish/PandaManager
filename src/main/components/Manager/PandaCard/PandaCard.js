@@ -9,18 +9,18 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Clear";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { managerContext } from "../context";
-import { cardStyles } from "./styles";
+import { container, cardStyles } from "./styles";
 
 const PandaCard = props => {
   const data = props.data;
   const showDetails = props.func;
   const { cycling, updateInList, removeFromList } = useContext(managerContext);
 
-  const { container } = cardStyles(data.enabled, data.selected);
-  const useStyles = makeStyles(cardStyles(data.enabled, data.selected));
+  const isDark = useTheme().palette.type == "dark";
+  const useStyles = makeStyles(cardStyles(isDark, data.enabled, data.selected));
 
   const classes = useStyles();
 
@@ -58,7 +58,7 @@ const PandaCard = props => {
           <Button
             disabled={cycling}
             variant="contained"
-            color="primary"
+            color={isDark ? "primary" : "default"}
             disableElevation
           >
             Start
@@ -66,7 +66,7 @@ const PandaCard = props => {
           <Button
             disabled={cycling}
             variant="contained"
-            color="primary"
+            color={isDark ? "primary" : "default"}
             onClick={() => showDetails(data)}
             disableElevation
           >
@@ -78,7 +78,7 @@ const PandaCard = props => {
               updateInList(data, { ...data, enabled: event.target.checked });
             }}
             checked={data.enabled}
-            color="primary"
+            color={isDark ? "primary" : "default"}
           />
         </CardActions>
       </Card>

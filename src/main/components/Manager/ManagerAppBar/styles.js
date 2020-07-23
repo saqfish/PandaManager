@@ -8,7 +8,13 @@ const styles = theme => {
     navigationStyle: {
       marginRight: theme.spacing(2)
     },
-    toolbarButtons: {},
+    toolbarButtons: { },
+    cycleButton: {
+      color: "white"
+    },
+    addButton: {
+      color: "white"
+    },
     title: {
       paddingLeft: 12,
       flexGrow: 1

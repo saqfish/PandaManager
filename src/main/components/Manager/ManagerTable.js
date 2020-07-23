@@ -18,7 +18,6 @@ import { containerStyle, tableStyles } from "./styles";
 import { table } from "./values";
 
 const ManagerTable = () => {
-  const [bottomBarVisible, setBottomBarVisible] = useState(false);
   const [rowDisplay, setRowDisplay] = useState(false);
   const [dialog, setDialog] = useState({ open: false, type: null });
 
@@ -33,11 +32,10 @@ const ManagerTable = () => {
       <ManagerAppBar
         data={{
           list,
-          title: "Pandas",
-          bottomBarVisible,
+          title: "Panda Manager",
           cycling
         }}
-        func={{ setBottomBarVisible, setDialog, setCycling }}
+        func={{ setDialog, setCycling }}
       />
       <MaterialTable
         data={list}
@@ -52,7 +50,7 @@ const ManagerTable = () => {
         ]}
         components={{
           Toolbar: props =>
-            bottomBarVisible ? (
+            !cycling ? (
               <div style={tableStyles.toolbarStyle}>
                 <ManagerToolbar />
                 <MTableToolbar {...props} />
