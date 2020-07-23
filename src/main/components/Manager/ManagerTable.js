@@ -15,9 +15,10 @@ import { List, ListAlt } from "@material-ui/icons";
 
 import { managerContext } from "./context";
 import { containerStyle, tableStyles } from "./styles";
-import { table } from "./values";
+import { table } from "./table";
 
 const ManagerTable = () => {
+  const [bottomBarVisible, setBottomBarVisible] = useState(false);
   const [rowDisplay, setRowDisplay] = useState(false);
   const [dialog, setDialog] = useState({ open: false, type: null });
 
@@ -33,9 +34,10 @@ const ManagerTable = () => {
         data={{
           list,
           title: "Panda Manager",
-          cycling
+          cycling,
+          bottomBarVisible
         }}
-        func={{ setDialog, setCycling }}
+        func={{ setDialog, setCycling, setBottomBarVisible }}
       />
       <MaterialTable
         data={list}
@@ -50,7 +52,7 @@ const ManagerTable = () => {
         ]}
         components={{
           Toolbar: props =>
-            !cycling ? (
+            bottomBarVisible ? (
               <div style={tableStyles.toolbarStyle}>
                 <ManagerToolbar />
                 <MTableToolbar {...props} />

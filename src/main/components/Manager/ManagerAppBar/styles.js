@@ -15,6 +15,9 @@ const styles = theme => {
     addButton: {
       color: "white"
     },
+    expandButton: {
+      color: "white"
+    },
     title: {
       paddingLeft: 12,
       flexGrow: 1

@@ -4,7 +4,9 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 
+import { ExpandMore, ExpandLess } from "@material-ui/icons";
 import AddButton from "@material-ui/icons/PostAdd";
 import PlayButton from "@material-ui/icons/PlayArrow";
 import StopButton from "@material-ui/icons/Stop";
@@ -20,8 +22,8 @@ const useStyles = makeStyles(theme => style(theme));
 
 const ManagerAppBar = props => {
   const { data, func } = props;
-  const { setDialog, setCycling } = func;
-  const { title, cycling } = data;
+  const { setDialog, setCycling, setBottomBarVisible } = func;
+  const { title, cycling, bottomBarVisible } = data;
 
   const classes = useStyles();
 
@@ -53,6 +55,14 @@ const ManagerAppBar = props => {
           >
             <AddButton />
           </IconButton>
+          <Tooltip title="More">
+            <IconButton
+              className={classes.expandButton}
+              onClick={() => setBottomBarVisible(!bottomBarVisible)}
+            >
+              {bottomBarVisible ? <ExpandMore /> : <ExpandLess />}
+            </IconButton>
+          </Tooltip>
         </div>
       </Toolbar>
     </AppBar>
