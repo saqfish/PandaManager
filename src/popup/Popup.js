@@ -13,16 +13,20 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-
-import PlayIcon from "@material-ui/icons/PlayArrow";
+import Switch from "@material-ui/core/Switch";
+import Divider from "@material-ui/core/Divider";
 
 import PopupAppBar from "./components/PopupAppBar/PopupAppBar";
+
+import { sendToBackground } from "miscUtils";
+import { messages } from "constants";
 
 import override from "./overrides";
 import style from "./styles";
 
 const Popup = props => {
   const [data, setData] = useState(props.data.pandas);
+  const [cycling, setCycling] = useState(props.cycling);
   const defaultTheme = createMuiTheme();
 
   const theme = {
@@ -39,7 +43,6 @@ const Popup = props => {
   useEffect(() => {
     var port = browser.runtime.connect({ name: "scrapeConnection" });
     port.onMessage.addListener(res => {
-      console.log(res);
       setData(res);
     });
     return () => {
@@ -47,21 +50,35 @@ const Popup = props => {
     };
   }, []);
 
+  const handleCycleChange = () => {
+    sendToBackground(messages.cycle, {})
+      .then(res => {
+        setCycling(res);
+      })
+      .catch(() => setCycling(false));
+  };
+
   return (
     <ThemeProvider theme={mainTheme}>
       <CssBaseline />
       <div className={classes.root}>
         <PopupAppBar />
-        {data.map(item => (
-          <List>
+        <List>
+          <ListItem dense={true}>
+            <ListItemText primary={"Cycle"} />
+            <ListItemSecondaryAction>
+              <Switch checked={cycling} onChange={handleCycleChange} />
+            </ListItemSecondaryAction>
+          </ListItem>
+        </List>
+        <Divider />
+        <List className={classes.pandas}>
+          {data.map(item => (
             <ListItem selected={item.selected} dense={true}>
-              <ListItemText primary={item.name} />
-              <ListItemSecondaryAction>
-                <PlayIcon />
-              </ListItemSecondaryAction>
+              <ListItemText primary={item.name} secondary={item.description} />
             </ListItem>
-          </List>
-        ))}
+          ))}
+        </List>
       </div>
     </ThemeProvider>
   );
