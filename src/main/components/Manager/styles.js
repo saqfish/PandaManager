@@ -27,23 +27,34 @@ const tableStyles = {
   enabled: {
     flex: 0
   },
+  selected: selected => {
+    console.log(selected);
+    return {
+      color: selected ? "green" : "white",
+      flex: 0
+    };
+  },
   name: {
-    flex: 0,
-    maxWidth: 150,
+    flex: 0.5,
+    maxWidth: 200,
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap"
   },
   link: {
-    flex: 0,
-    maxWidth: 150,
+    flex: 0.5,
+    maxWidth: 400,
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
     opacity: 0.3
   },
   description: {
-    flex: 4,
+    flex: 1,
+    width: 200,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
     opacity: 0.3
   },
   cardContainerStyle: {

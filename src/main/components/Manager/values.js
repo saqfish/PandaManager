@@ -1,8 +1,7 @@
 import React from "react";
 import { tableStyles } from "./styles";
 
-import Checkbox from "@material-ui/core/Checkbox";
-import { Search, Clear } from "@material-ui/icons";
+import { AccessTime, Search, Clear } from "@material-ui/icons";
 
 const tableIcons = { Clear, Search, ResetSearch: Clear };
 
@@ -29,22 +28,16 @@ const table = {
   columns: [
     {
       align: "left",
-      title: "Enabled",
-      field: "enabled",
-      render: rowData => <Checkbox checked={rowData.enabled} />,
-      cellStyle: tableStyles.enabled
+      title: "Selected",
+      field: "selected",
+      render: () => <AccessTime/>,
+      cellStyle: rowData => tableStyles.selected(rowData)
     },
     {
       align: "left",
       title: "Req name/id, Hit ID",
       field: "name",
       cellStyle: tableStyles.name
-    },
-    {
-      align: "left",
-      title: "Link",
-      field: "link",
-      cellStyle: tableStyles.link
     },
     {
       align: "left",
