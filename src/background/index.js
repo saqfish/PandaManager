@@ -20,16 +20,9 @@ const { loadAudio, setSound, sound } = PMAudio(); // eslint-disable-line
 let docsData = { page: 0 };
 
 const dispatcher = value => {
-  console.log(value);
   return new Promise((resolve, reject) => {
     const dispatch = {
       [messages.initMain]: () => {
-        browser.runtime.onConnect.addListener(function(port) {
-          cycler.setClient(port);
-          port.onDisconnect.addListener(function() {
-            cycler.setClient(null);
-          });
-        });
         resolve({
           theme: settingsValues().theme,
           data: settingsValues(),
@@ -116,6 +109,13 @@ const dispatcher = value => {
 async function background() {
   await loadSettings();
   await loadAudio(settingsValues().beep);
+
+  browser.runtime.onConnect.addListener(port => {
+    cycler.addClient(port);
+    port.onDisconnect.addListener(client => {
+      cycler.removeClient(client);
+    });
+  });
 
   browser.runtime.onMessage.addListener(
     message =>

@@ -1,6 +1,6 @@
 let timeout = null;
 let innerTimeout = null;
-let client = null;
+let clients = [];
 let cycling = false;
 
 const sleep = ms =>
@@ -13,19 +13,32 @@ const clearSelected = pandas => {
 };
 
 const send = (pandas, client) => {
-  if (client != null) client.postMessage(pandas);
+  for (client of clients) {
+    if (client != null) {
+      try {
+        client.postMessage(pandas);
+      } catch (error) {
+        console.log(error);
+        clients = clients.filter(cClient => cClient != client);
+      }
+    }
+  }
 };
 
 const cycler = {
   cycling: () => cycling,
   setCycling: value => (cycling = value),
-  setClient: value => (client = value),
+  addClient: value => clients.push(value),
+  clients: () => clients,
+  removeClient: value => {
+    clients = clients.filter(client => client != value);
+  },
   toggle: () => (cycling = !cycling)
 };
 
 const cycle = values => {
   const { pandas, delays } = values;
-  send(pandas, client);
+  send(pandas, clients);
 
   return new Promise(async (resolve, reject) => {
     clearTimeout(timeout);
@@ -35,11 +48,10 @@ const cycle = values => {
       resolve(cycling);
 
       if (cycling) {
-        console.log(`cycle ${timeout}`);
         for (let panda of pandas) {
           if (panda.enabled) {
             panda.selected = true;
-            send(pandas, client);
+            send(pandas, clients);
             await sleep(delays.cycle);
             panda.selected = false;
           }
@@ -48,7 +60,7 @@ const cycle = values => {
       } else {
         if (innerTimeout) clearTimeout(innerTimeout);
         clearSelected(pandas);
-        send(pandas, client);
+        send(pandas, clients);
       }
     } else reject();
   });
