@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import * as browser from "webextension-polyfill";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
@@ -20,7 +22,7 @@ import override from "./overrides";
 import style from "./styles";
 
 const Popup = props => {
-  const data = props.data;
+  const [data, setData] = useState(props.data.pandas);
   const defaultTheme = createMuiTheme();
 
   const theme = {
@@ -34,14 +36,25 @@ const Popup = props => {
   const mainTheme = createMuiTheme(theme);
   const classes = useStyles();
 
+  useEffect(() => {
+    var port = browser.runtime.connect({ name: "scrapeConnection" });
+    port.onMessage.addListener(res => {
+      console.log(res);
+      setData(res);
+    });
+    return () => {
+      port.onMessage.removeListener();
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={mainTheme}>
       <CssBaseline />
       <div className={classes.root}>
         <PopupAppBar />
-        {data.pandas.map(item => (
+        {data.map(item => (
           <List>
-            <ListItem dense={true}>
+            <ListItem selected={item.selected} dense={true}>
               <ListItemText primary={item.name} />
               <ListItemSecondaryAction>
                 <PlayIcon />
