@@ -21,7 +21,7 @@ const defaults = {
     delays: {
       cycle: 1000
     },
-    inTab: false,
+    inTab: true,
     theme: {
       palette: {
         type: "dark"

@@ -58,7 +58,7 @@ const Manager = props => {
   }, [list, delays]);
 
   useEffect(() => {
-    var port = browser.runtime.connect({ name: "scrapeConnection" });
+    var port = browser.runtime.connect({ name: "pm_port" });
     port.onMessage.addListener(res => {
       setList(res);
     });

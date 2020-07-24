@@ -98,7 +98,7 @@ const dispatcher = value => {
             btoa(unescape(JSON.stringify(tempData)));
           browser.downloads.download({
             url: url,
-            filename: "backup.json"
+            filename: "pm_backup.json"
           });
         }
         resolve();

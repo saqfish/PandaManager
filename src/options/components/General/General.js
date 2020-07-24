@@ -1,7 +1,8 @@
 import React from "react";
 
 import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
+import CardHeader from "@material-ui/core/CardHeader";
+import Avatar from "@material-ui/core/Avatar";
 
 import BackupPanel from "./BackupPanel";
 
@@ -16,15 +17,7 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12
   },
-  logoCard: {
-    width: 380,
-    height: 120
-  },
-  logo: {
-    width: 312,
-    height: 82,
-    margin: "20px 10px 10px 20px"
-  }
+  logo: { }
 });
 
 export default function General() {
@@ -35,10 +28,16 @@ export default function General() {
   return (
     <div className={classes.root}>
       <Card className={classes.logoCard}>
-        <CardMedia
-          className={classes.logo}
-          image={dark ? "/img/logo_light.png" : "/img/logo.png"}
+        <CardHeader
+          avatar={
+            <Avatar
+              variant="square"
+              alt="Logo"
+              src={dark ? "/img/icon.png" : "/img/icon_light.png"}
+            />
+          }
           title="Panda Manager"
+          subheader="v1.0.3"
         />
       </Card>
       <BackupPanel />

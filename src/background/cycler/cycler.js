@@ -39,6 +39,9 @@ const cycler = {
 
 const cycle = values => {
   const { pandas, delays } = values;
+
+  clearSelected(pandas);
+
   send(pandas, clients);
 
   return new Promise(async (resolve, reject) => {

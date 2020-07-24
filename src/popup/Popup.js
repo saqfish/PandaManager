@@ -41,7 +41,7 @@ const Popup = props => {
   const classes = useStyles();
 
   useEffect(() => {
-    var port = browser.runtime.connect({ name: "scrapeConnection" });
+    var port = browser.runtime.connect({ name: "pm_port" });
     port.onMessage.addListener(res => {
       setData(res);
     });
@@ -75,7 +75,7 @@ const Popup = props => {
         <List className={classes.pandas}>
           {data.map(item => (
             <ListItem selected={item.selected} dense={true}>
-              <ListItemText primary={item.name} secondary={item.description} />
+              <ListItemText primary={item.name} />
             </ListItem>
           ))}
         </List>
