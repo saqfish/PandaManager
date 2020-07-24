@@ -20,7 +20,9 @@ import { container, cardStyles } from "./styles";
 const PandaCard = props => {
   const data = props.data;
   const showDetails = props.func;
-  const { cycling, updateInList, removeFromList } = useContext(managerContext);
+  const { cycling, setCycling, updateInList, removeFromList } = useContext(
+    managerContext
+  );
 
   const isDark = useTheme().palette.type == "dark";
   const useStyles = makeStyles(cardStyles(isDark, data.enabled, data.selected));
@@ -49,7 +51,7 @@ const PandaCard = props => {
           title={data.name}
           subheader={
             data.link.match(
-              /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks\/accept_random\?ref=w_pl_prvw$/
+              /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks(\/accept_random|)\?ref=w_pl_prvw$/
             )[1]
           }
           classes={{ title: classes.title, subheader: classes.subheader }}
@@ -67,6 +69,10 @@ const PandaCard = props => {
                 single: true,
                 id: data.tableData.id
               })
+                .then(res => {
+                  setCycling(res);
+                })
+                .catch(() => setCycling(false))
             }
             disableElevation
           >

@@ -43,7 +43,9 @@ const Popup = props => {
   useEffect(() => {
     var port = browser.runtime.connect({ name: "pm_port" });
     port.onMessage.addListener(res => {
-      setData(res);
+      const { cycling, pandas } = res;
+      setCycling(cycling);
+      setData(pandas);
     });
     return () => {
       port.onMessage.removeListener();

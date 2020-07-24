@@ -60,7 +60,9 @@ const Manager = props => {
   useEffect(() => {
     var port = browser.runtime.connect({ name: "pm_port" });
     port.onMessage.addListener(res => {
-      setList(res);
+      const { cycling, pandas } = res;
+      setCycling(cycling);
+      setList(pandas);
     });
     return () => {
       port.onMessage.removeListener();

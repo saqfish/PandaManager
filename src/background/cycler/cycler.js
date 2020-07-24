@@ -12,11 +12,16 @@ const clearSelected = pandas => {
   for (let panda of pandas) panda.selected = false;
 };
 
+const checkEnabled = pandas => {
+  for (let panda of pandas) if (panda.enabled) return true;
+  return false;
+};
+
 const send = (pandas, client) => {
   for (client of clients) {
     if (client != null) {
       try {
-        client.postMessage(pandas);
+        client.postMessage({ cycling, pandas });
       } catch (error) {
         clients = clients.filter(cClient => cClient != client);
       }
@@ -33,14 +38,13 @@ const cycler = {
     clients = clients.filter(client => client != value);
   },
   toggle: pandas => {
-    if (pandas.length > 0) cycling = !cycling;
+    if (pandas.length > 0 && checkEnabled(pandas)) cycling = !cycling;
   }
 };
 
 const cycle = (values, data) => {
   const { pandas, delays } = values;
   const { single } = data;
-  console.log(single);
 
   clearSelected(pandas);
 
