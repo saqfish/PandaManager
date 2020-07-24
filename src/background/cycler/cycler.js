@@ -18,7 +18,6 @@ const send = (pandas, client) => {
       try {
         client.postMessage(pandas);
       } catch (error) {
-        console.log(error);
         clients = clients.filter(cClient => cClient != client);
       }
     }
@@ -33,7 +32,9 @@ const cycler = {
   removeClient: value => {
     clients = clients.filter(client => client != value);
   },
-  toggle: () => (cycling = !cycling)
+  toggle: pandas => {
+    if (pandas.length > 0) cycling = !cycling;
+  }
 };
 
 const cycle = values => {
@@ -44,7 +45,7 @@ const cycle = values => {
     clearTimeout(timeout);
     timeout = null;
 
-    if (pandas.length) {
+    if (pandas.length > 0) {
       resolve(cycling);
 
       if (cycling) {

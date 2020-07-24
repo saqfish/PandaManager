@@ -50,7 +50,7 @@ const dispatcher = value => {
         });
       },
       [messages.cycle]: () => {
-        cycler.toggle();
+        cycler.toggle(settingsValues().pandas);
         cycle(settingsValues())
           .then(cycling => {
             resolve(cycling);
