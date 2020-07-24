@@ -44,7 +44,8 @@ const ManagerTable = () => {
         {...table}
         actions={[
           {
-            icon: rowDisplay ? List : ListAlt,
+            icon: rowDisplay ? ListAlt : List,
+            tooltip: rowDisplay ? "Show cards" : "Show table",
             isFreeAction: true,
             type: 0,
             onClick: () => setRowDisplay(!rowDisplay)

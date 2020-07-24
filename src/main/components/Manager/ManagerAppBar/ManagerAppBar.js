@@ -34,28 +34,32 @@ const ManagerAppBar = props => {
           {title}
         </Typography>
         <div className={classes.toolbarButtons}>
-          <IconButton
-            className={classes.cycleButton}
-            onClick={() =>
-              sendToBackground(messages.cycle, {single: false})
-                .then(res => {
-                  setCycling(res);
-                })
-                .catch(() => setCycling(false))
-            }
-            disableElevation
-          >
-            {cycling ? <StopButton /> : <PlayButton />}
-          </IconButton>
-          <IconButton
-            disabled={cycling}
-            className={classes.addButton}
-            onClick={() => setDialog({ open: true, type: 1 })}
-            disableElevation
-          >
-            <AddButton />
-          </IconButton>
-          <Tooltip title="More">
+          <Tooltip title={cycling ? "Stop" : "Start"}>
+            <IconButton
+              className={classes.cycleButton}
+              onClick={() =>
+                sendToBackground(messages.cycle, { single: false })
+                  .then(res => {
+                    setCycling(res);
+                  })
+                  .catch(() => setCycling(false))
+              }
+              disableElevation
+            >
+              {cycling ? <StopButton /> : <PlayButton />}
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Add">
+            <IconButton
+              disabled={cycling}
+              className={classes.addButton}
+              onClick={() => setDialog({ open: true, type: 1 })}
+              disableElevation
+            >
+              <AddButton />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={bottomBarVisible ? "Less" : "More"}>
             <IconButton
               className={classes.expandButton}
               onClick={() => setBottomBarVisible(!bottomBarVisible)}
