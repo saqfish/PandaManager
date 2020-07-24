@@ -11,10 +11,12 @@ import {
 
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Switch from "@material-ui/core/Switch";
 import Divider from "@material-ui/core/Divider";
+import Avatar from "@material-ui/core/Avatar";
 
 import PopupAppBar from "./components/PopupAppBar/PopupAppBar";
 
@@ -77,6 +79,11 @@ const Popup = props => {
         <List className={classes.pandas}>
           {data.map(item => (
             <ListItem selected={item.selected} dense={true}>
+              <ListItemAvatar>
+                <Avatar variant="square" aria-label="accepted">
+                  {item.accepted}
+                </Avatar>
+              </ListItemAvatar>
               <ListItemText primary={item.name} />
             </ListItem>
           ))}

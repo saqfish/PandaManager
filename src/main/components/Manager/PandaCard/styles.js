@@ -36,7 +36,7 @@ const cardStyles = (isDark, enabled, selected) => {
     description: {
       color: "white",
       textOverflow: "ellipsis",
-      maxWidth: "200px",
+      maxWidth: "250px",
       overflow: "hidden",
       whiteSpace: "nowrap",
       display: "block"

@@ -48,6 +48,8 @@ const acceptPanda = panda => {
   panda.selected = true;
   accept(panda.link)
     .then(res => {
+      panda.name = res.project.requester_name;
+      panda.description = res.project.title;
       panda.accepted++;
       console.log(res);
     })
