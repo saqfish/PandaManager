@@ -1,3 +1,5 @@
+import { accept } from "../util";
+
 let timeout = null;
 let innerTimeout = null;
 let clients = [];
@@ -42,6 +44,16 @@ const cycler = {
   }
 };
 
+const acceptPanda = panda => {
+  panda.selected = true;
+  accept(panda.link)
+    .then(res => {
+      panda.accepted++;
+      console.log(res);
+    })
+    .catch(res => console.log(res));
+};
+
 const cycle = (values, data) => {
   const { pandas, delays } = values;
   const { single } = data;
@@ -59,14 +71,16 @@ const cycle = (values, data) => {
 
       if (cycling) {
         if (single) {
-          pandas[data.id].selected = true;
+          let panda = pandas[data.id];
+          acceptPanda(panda);
           send(pandas, clients);
           await sleep(delays.cycle);
-          pandas[data.id].selected = false;
+          panda.selected = false;
         } else {
           for (let panda of pandas) {
             if (panda.enabled) {
               panda.selected = true;
+              acceptPanda(panda);
               send(pandas, clients);
               await sleep(delays.cycle);
               panda.selected = false;

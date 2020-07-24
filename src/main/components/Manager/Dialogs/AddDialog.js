@@ -29,6 +29,7 @@ const AddDialog = props => {
   const [item, setItem] = useState({
     name: "",
     link: "",
+    accepted: 0,
     description: "",
     single: false,
     enabled: true

@@ -35,7 +35,7 @@ const PandaCard = props => {
         <CardHeader
           avatar={
             <Avatar variant="square" aria-label="timer">
-              {data.single ? 1 : "+"}
+              {data.accepted}
             </Avatar>
           }
           action={
