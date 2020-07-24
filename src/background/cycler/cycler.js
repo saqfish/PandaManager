@@ -51,7 +51,6 @@ const acceptPanda = panda => {
       panda.name = res.project.requester_name;
       panda.description = res.project.title;
       panda.accepted++;
-      console.log(res);
     })
     .catch(res => console.log(res));
 };

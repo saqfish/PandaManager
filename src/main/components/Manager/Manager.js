@@ -30,7 +30,9 @@ const Manager = props => {
   };
 
   const removeFromList = item =>
-    setList(prev => prev.filter(value => value != item));
+    setList(prev =>
+      prev.filter(value => value.tableData.id != item.tableData.id)
+    );
 
   const updateInList = (oldItem, newItem) => {
     setList(prev =>
