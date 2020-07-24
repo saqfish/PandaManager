@@ -20,7 +20,6 @@ const { loadAudio, setSound, sound } = PMAudio(); // eslint-disable-line
 let docsData = { page: 0 };
 
 const dispatcher = value => {
-  console.log(value);
   return new Promise((resolve, reject) => {
     const dispatch = {
       [messages.initMain]: () => {
@@ -49,9 +48,9 @@ const dispatcher = value => {
           data: docsData
         });
       },
-      [messages.cycle]: () => {
+      [messages.cycle]: data => {
         cycler.toggle(settingsValues().pandas);
-        cycle(settingsValues())
+        cycle(settingsValues(), data)
           .then(cycling => {
             resolve(cycling);
           })

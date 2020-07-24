@@ -37,8 +37,10 @@ const cycler = {
   }
 };
 
-const cycle = values => {
+const cycle = (values, data) => {
   const { pandas, delays } = values;
+  const { single } = data;
+  console.log(single);
 
   clearSelected(pandas);
 
@@ -52,15 +54,22 @@ const cycle = values => {
       resolve(cycling);
 
       if (cycling) {
-        for (let panda of pandas) {
-          if (panda.enabled) {
-            panda.selected = true;
-            send(pandas, clients);
-            await sleep(delays.cycle);
-            panda.selected = false;
+        if (single) {
+          pandas[data.id].selected = true;
+          send(pandas, clients);
+          await sleep(delays.cycle);
+          pandas[data.id].selected = false;
+        } else {
+          for (let panda of pandas) {
+            if (panda.enabled) {
+              panda.selected = true;
+              send(pandas, clients);
+              await sleep(delays.cycle);
+              panda.selected = false;
+            }
           }
         }
-        cycle(values);
+        cycle(values, data);
       } else {
         if (innerTimeout) clearTimeout(innerTimeout);
         clearSelected(pandas);

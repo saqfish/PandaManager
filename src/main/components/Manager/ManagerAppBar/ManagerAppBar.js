@@ -37,7 +37,7 @@ const ManagerAppBar = props => {
           <IconButton
             className={classes.cycleButton}
             onClick={() =>
-              sendToBackground(messages.cycle, {})
+              sendToBackground(messages.cycle, {single: false})
                 .then(res => {
                   setCycling(res);
                 })
