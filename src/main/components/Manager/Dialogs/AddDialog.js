@@ -18,13 +18,13 @@ import EnabledCheck from "./EnabledCheck";
 
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
-import { managerContext } from "../context";
+import { ListContext } from "../context";
 import { messageDialogStyles } from "./styles";
 
 const AddDialog = props => {
   const close = props.close;
 
-  const { addToList } = useContext(managerContext);
+  const { addToList } = useContext(ListContext);
 
   const [item, setItem] = useState({
     name: "",

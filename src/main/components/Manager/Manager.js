@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 
+import * as browser from "webextension-polyfill";
+
 import Dialog from "@material-ui/core/Dialog";
 
 import ManagerAppBar from "./ManagerAppBar/ManagerAppBar";
 import ManagerToolbar from "./ManagerToolbar/ManagerToolbar";
 import ManagerContent from "./ManagerContent/ManagerContent";
-import { managerContext } from "./context";
 
 import AddDialog from "./Dialogs/AddDialog";
 import DetailDialog from "./Dialogs/DetailDialog";
 
-import * as browser from "webextension-polyfill";
-
+import { ListContext, DelayContext } from "./context";
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
@@ -24,17 +24,12 @@ const Manager = props => {
 
   const loadedRef = useRef(false);
 
-  const updateDelays = items => {
-    setDelays(items);
-  };
+  const updateDelays = items => { setDelays(items); };
 
   const addToList = item => {
     setList(prev => [
       ...prev,
-      {
-        ...item,
-        tableData: { id: list.length }
-      }
+      { ...item, tableData: { id: list.length } }
     ]);
   };
 
@@ -47,8 +42,7 @@ const Manager = props => {
     setList(prev =>
       prev.map((value, index) =>
         index == oldItem.tableData.id
-          ? { ...newItem, tableData: { id: oldItem.tableData.id } }
-          : value
+          ? { ...newItem, tableData: { id: oldItem.tableData.id } } : value
       )
     );
   };
@@ -63,13 +57,12 @@ const Manager = props => {
     setDialog({ open: false, type: null, data: null });
 
   const showDetails = item => setDialog({ open: true, type: 2, data: item });
+
   useEffect(() => {
     if (loadedRef.current) {
       sendList(list);
       sendDelays(delays);
-    } else {
-      loadedRef.current = true;
-    }
+    } else loadedRef.current = true;
   }, [list, delays]);
 
   useEffect(() => {
@@ -85,36 +78,30 @@ const Manager = props => {
   }, []);
 
   return (
-    <managerContext.Provider
+    <ListContext.Provider
       value={{
-        list,
-        delays,
-        cycling,
-        setCycling,
-        updateDelays,
-        addToList,
-        removeFromList,
-        updateInList,
+        cycling, setCycling,
+        list, addToList, removeFromList, updateInList,
         showDetails
-      }}
-    >
+      }} >
+
       <ManagerAppBar
         data={{ list, title: "Panda Manager", cycling, bottomBarVisible }}
-        func={{ setDialog, setCycling, setBottomBarVisible }}
-      />
-      {bottomBarVisible ? (
-        <div>
-          <ManagerToolbar />
-        </div>
-      ) : null}
-      <ManagerContent />
+        func={{ setDialog, setCycling, setBottomBarVisible }} />
+
+      <DelayContext.Provider value={{ delays, updateDelays }}>
+        {bottomBarVisible ? <ManagerToolbar /> : null}
+        <ManagerContent />
+      </DelayContext.Provider>
+
       <Dialog open={dialog.open} onClose={onDialogClose}>
         {dialog.type == 1 ? <AddDialog close={onDialogClose} /> : null}
         {dialog.type == 2 ? (
           <DetailDialog data={dialog.data} close={onDialogClose} />
         ) : null}
       </Dialog>
-    </managerContext.Provider>
+
+    </ListContext.Provider>
   );
 };
 

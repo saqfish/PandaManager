@@ -4,12 +4,12 @@ import Paper from "@material-ui/core/Paper";
 
 import PandaCard from "../PandaCard/PandaCard";
 
-import { managerContext } from "../context";
+import { ListContext } from "../context";
 import { containerStyle, cardContainerStyle } from "./styles";
 
 const ManagerContent = () => {
 
-  const { list, showDetails } = useContext(managerContext);
+  const { list, showDetails } = useContext(ListContext);
 
   return (
     <Paper style={containerStyle}>

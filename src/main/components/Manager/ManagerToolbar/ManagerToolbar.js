@@ -7,11 +7,11 @@ import Divider from "@material-ui/core/Divider";
 import DelayInput from "./DelayInput";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { managerContext } from "../context";
+import { DelayContext } from "../context";
 import style from "./styles";
 
 const ManagerToolbar = () => {
-  const { delays: cDelays, updateDelays } = useContext(managerContext);
+  const { delays: cDelays, updateDelays } = useContext(DelayContext);
 
   const [delays, setDelays] = useState(cDelays);
   const delaysRef = useRef(delays);
@@ -23,6 +23,8 @@ const ManagerToolbar = () => {
     const temp = event.target.value;
     setDelays(prev => ({ ...prev, cycle: temp }));
   };
+
+  console.log(delays);
 
   return (
     <div className={classes.container}>
@@ -44,7 +46,7 @@ const ManagerToolbar = () => {
           Update
         </Button>
       </Toolbar>
-      <Divider/>
+      <Divider />
     </div>
   );
 };

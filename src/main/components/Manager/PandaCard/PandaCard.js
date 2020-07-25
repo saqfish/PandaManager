@@ -14,14 +14,14 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
-import { managerContext } from "../context";
+import { ListContext } from "../context";
 import { container, cardStyles } from "./styles";
 
 const PandaCard = props => {
   const data = props.data;
   const showDetails = props.func;
   const { cycling, setCycling, updateInList, removeFromList } = useContext(
-    managerContext
+    ListContext
   );
 
   const isDark = useTheme().palette.type == "dark";

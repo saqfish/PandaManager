@@ -1,3 +1,6 @@
 import {createContext} from 'react';
 
-export const managerContext = createContext({});
+const DelayContext = createContext({});
+const ListContext = createContext({});
+
+export {ListContext, DelayContext};
