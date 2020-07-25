@@ -11,7 +11,7 @@ const DelayInput = props => {
   const { value, classes } = props.data;
 
   return (
-    <Paper component="form" className={classes.root} elevation={0} square>
+    <Paper component="form" className={classes.form} elevation={0} square>
       <DelayIcon />
       <Tooltip title={"Delay"}>
         <InputBase

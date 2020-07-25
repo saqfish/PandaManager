@@ -1,6 +1,8 @@
 import React, { useState, useContext, useRef } from "react";
 
 import Button from "@material-ui/core/Button";
+import Toolbar from "@material-ui/core/Toolbar";
+import Divider from "@material-ui/core/Divider";
 
 import DelayInput from "./DelayInput";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,22 +26,25 @@ const ManagerToolbar = () => {
 
   return (
     <div className={classes.container}>
-      <DelayInput
-        data={{ value: delays.cycle, classes }}
-        func={handleDelayChange}
-      />
-      <Button
-        disabled={delays == delaysRef.current}
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          updateDelays(delays);
-        }}
-        aria-label="close"
-        disableElevation
-      >
-        Update
-      </Button>
+      <Toolbar variant="dense">
+        <DelayInput
+          data={{ value: delays.cycle, classes }}
+          func={handleDelayChange}
+        />
+        <Button
+          disabled={delays == delaysRef.current}
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            updateDelays(delays);
+          }}
+          aria-label="close"
+          disableElevation
+        >
+          Update
+        </Button>
+      </Toolbar>
+      <Divider/>
     </div>
   );
 };

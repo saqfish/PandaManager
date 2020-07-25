@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import ManagerTable from "./ManagerTable";
+import Dialog from "@material-ui/core/Dialog";
+
+import ManagerAppBar from "./ManagerAppBar/ManagerAppBar";
+import ManagerToolbar from "./ManagerToolbar/ManagerToolbar";
+import ManagerContent from "./ManagerContent/ManagerContent";
 import { managerContext } from "./context";
+
+import AddDialog from "./Dialogs/AddDialog";
+import DetailDialog from "./Dialogs/DetailDialog";
 
 import * as browser from "webextension-polyfill";
 
@@ -9,9 +16,11 @@ import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
 const Manager = props => {
-  const [cycling, setCycling] = useState(props.cycling);
   const [list, setList] = useState(props.data.pandas);
   const [delays, setDelays] = useState(props.data.delays);
+  const [cycling, setCycling] = useState(props.cycling);
+  const [bottomBarVisible, setBottomBarVisible] = useState(false);
+  const [dialog, setDialog] = useState({ open: false, type: null });
 
   const loadedRef = useRef(false);
 
@@ -50,6 +59,10 @@ const Manager = props => {
   const sendDelays = values =>
     sendToBackground(messages.setSettingsValues, { delays: values });
 
+  const onDialogClose = () =>
+    setDialog({ open: false, type: null, data: null });
+
+  const showDetails = item => setDialog({ open: true, type: 2, data: item });
   useEffect(() => {
     if (loadedRef.current) {
       sendList(list);
@@ -74,17 +87,33 @@ const Manager = props => {
   return (
     <managerContext.Provider
       value={{
-        cycling,
         list,
         delays,
+        cycling,
         setCycling,
+        updateDelays,
         addToList,
         removeFromList,
         updateInList,
-        updateDelays
+        showDetails
       }}
     >
-      <ManagerTable />
+      <ManagerAppBar
+        data={{ list, title: "Panda Manager", cycling, bottomBarVisible }}
+        func={{ setDialog, setCycling, setBottomBarVisible }}
+      />
+      {bottomBarVisible ? (
+        <div>
+          <ManagerToolbar />
+        </div>
+      ) : null}
+      <ManagerContent />
+      <Dialog open={dialog.open} onClose={onDialogClose}>
+        {dialog.type == 1 ? <AddDialog close={onDialogClose} /> : null}
+        {dialog.type == 2 ? (
+          <DetailDialog data={dialog.data} close={onDialogClose} />
+        ) : null}
+      </Dialog>
     </managerContext.Provider>
   );
 };

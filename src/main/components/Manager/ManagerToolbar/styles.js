@@ -1,14 +1,15 @@
 const styles = {
   container: {
+    backgroundColor: "#424242",
     display: "flex",
     alignItems: "center"
   },
-  root: {
+  form: {
+    padding: 6,
     display: "flex",
     alignItems: "center"
   },
   input: {
-    paddingLeft: 5,
     width: 80
   }
 };
