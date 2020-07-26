@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Divider from "@material-ui/core/Divider";
 
 import DelayInput from "./DelayInput";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { DelayContext } from "../context";
 import style from "./styles";
@@ -16,15 +16,14 @@ const ManagerToolbar = () => {
   const [delays, setDelays] = useState(cDelays);
   const delaysRef = useRef(delays);
 
-  const useStyles = makeStyles(style);
+  const isDark = useTheme().palette.type == "dark";
+  const useStyles = makeStyles(style(isDark));
   const classes = useStyles();
 
   const handleDelayChange = event => {
     const temp = event.target.value;
     setDelays(prev => ({ ...prev, cycle: temp }));
   };
-
-  console.log(delays);
 
   return (
     <div className={classes.container}>
@@ -39,6 +38,7 @@ const ManagerToolbar = () => {
           color="primary"
           onClick={() => {
             updateDelays(delays);
+            delaysRef.current = delays;
           }}
           aria-label="close"
           disableElevation

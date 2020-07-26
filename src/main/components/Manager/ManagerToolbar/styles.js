@@ -1,6 +1,6 @@
-const styles = {
+const style = dark => ({
   container: {
-    backgroundColor: "#424242",
+    backgroundColor: dark? "#303030": "#ffffff",
     display: "flex",
     alignItems: "center"
   },
@@ -12,6 +12,6 @@ const styles = {
   input: {
     width: 80
   }
-};
+});
 
-export default styles;
+export default style;
