@@ -7,14 +7,12 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 
-import BackupIcon from "@material-ui/icons/Backup";
-import LoadIcon from "@material-ui/icons/Publish";
-import SaveIcon from "@material-ui/icons/Save";
+import BugIcon from "@material-ui/icons/BugReport";
 
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
-const BackupPanel = () => {
+const Issues = () => {
   const inputRef = useRef(null);
 
   return (
@@ -22,26 +20,23 @@ const BackupPanel = () => {
       <ListItem>
         <ListItemAvatar>
           <Avatar variant="square">
-            <BackupIcon />
+            <BugIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Backup" secondary="" />
+        <ListItemText primary="Bugs" secondary="Issues? Please report them!" />
         <ListItemSecondaryAction>
           <Button
-            onClick={() => {
-              inputRef.current.click();
-            }}
-            startIcon={<LoadIcon />}
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              sendToBackground(
+                messages.openPage,
+                "https://github.com/saqfish/PandaManager/issues"
+              )
+            }
+            disableElevation
           >
-            Load
-          </Button>
-          <Button
-            onClick={() => {
-              sendToBackground(messages.backup, { load: false });
-            }}
-            startIcon={<SaveIcon />}
-          >
-            Save
+            Issue Tracker
           </Button>
         </ListItemSecondaryAction>
       </ListItem>
@@ -67,4 +62,4 @@ const BackupPanel = () => {
   );
 };
 
-export default BackupPanel;
+export default Issues;
