@@ -29,14 +29,14 @@ const ManagerAppBar = props => {
 
   return (
     <AppBar elevation={0} position="static">
-      <Toolbar className={classes.toolbarStyle} variant="dense">
+      <Toolbar className={classes.toolbar} variant="dense">
         <Typography className={classes.title} variant="h6" color="inherit">
           {title}
         </Typography>
-        <div className={classes.toolbarButtons}>
+        <div className={classes.buttons}>
           <Tooltip title={cycling ? "Stop" : "Start"}>
             <IconButton
-              className={classes.cycleButton}
+              className={classes.cycle}
               onClick={() =>
                 sendToBackground(messages.cycle, { single: false })
                   .then(res => {
@@ -52,7 +52,7 @@ const ManagerAppBar = props => {
           <Tooltip title="Add">
             <IconButton
               disabled={cycling}
-              className={classes.addButton}
+              className={classes.add}
               onClick={() => setDialog({ open: true, type: 1 })}
               disableElevation
             >
@@ -61,7 +61,7 @@ const ManagerAppBar = props => {
           </Tooltip>
           <Tooltip title={bottomBarVisible ? "Less" : "More"}>
             <IconButton
-              className={classes.expandButton}
+              className={classes.expand}
               onClick={() => setBottomBarVisible(!bottomBarVisible)}
             >
               {bottomBarVisible ? <ExpandMore /> : <ExpandLess />}

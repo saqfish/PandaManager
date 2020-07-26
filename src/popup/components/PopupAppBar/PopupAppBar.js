@@ -24,7 +24,7 @@ const PopupAppBar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.bar}>
+      <AppBar position="static" className={classes.toolbar}>
         <Toolbar variant="dense">
           <Typography variant="h6" className={classes.title}>
             Panda Manager
@@ -34,14 +34,14 @@ const PopupAppBar = () => {
             aria-label="bar buttons"
           >
             <Button
-              className={classes.barButton}
+              className={classes.main}
               onClick={() => sendToBackground(messages.openPage, "main.html")}
               disableElevation
             >
               <LaunchIcon />
             </Button>
             <Button
-              className={classes.barButton}
+              className={classes.settings}
               onClick={() =>
                 sendToBackground(messages.openPage, "options.html")
               }

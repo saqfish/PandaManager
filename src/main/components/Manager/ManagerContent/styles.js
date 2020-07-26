@@ -1,13 +1,10 @@
-const containerStyle = {
-  backgroundColor: "#424242",
-  display: "flex",
-  flexDirection: "column"
-};
+const style = dark => ({
+  container: {
+    backgroundColor: dark? "#303030": "#ffffff",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap"
+  }
+});
 
-const cardContainerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap"
-};
-
-export { containerStyle, cardContainerStyle };
+export default style;

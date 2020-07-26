@@ -4,20 +4,23 @@ import Paper from "@material-ui/core/Paper";
 
 import PandaCard from "../PandaCard/PandaCard";
 
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+
 import { ListContext } from "../context";
-import { containerStyle, cardContainerStyle } from "./styles";
+import style from "./styles";
 
 const ManagerContent = () => {
-
   const { list, showDetails } = useContext(ListContext);
 
+  const isDark = useTheme().palette.type == "dark";
+  const useStyles = makeStyles(style(isDark));
+  const classes = useStyles();
+
   return (
-    <Paper style={containerStyle}>
-      <div style={cardContainerStyle}>
-        {list.map(data => (
-          <PandaCard data={data} func={showDetails} />
-        ))}
-      </div>
+    <Paper className={classes.container} elevation={0} square>
+      {list.map(data => (
+        <PandaCard data={data} func={showDetails} />
+      ))}
     </Paper>
   );
 };

@@ -3,11 +3,11 @@ const container = {
 };
 
 const cardStyles = (isDark, enabled, selected) => {
-  const darkBg = selected ? "#055e68" : "#263859";
-  const lightBg = selected ? "#055e68": "#4c4c4c";
+  const darkBg = selected ? "#055e68" : "#121212";
+  const lightBg = selected ? "#055e68" : "#3f51b5";
 
   const enabledBg = isDark ? darkBg : lightBg;
-  const disabledBg = isDark ? "#4c4c4c" : "white";
+  const disabledBg = isDark ? "#4c4c4c" : "#ffffff";
 
   return {
     root: {
@@ -18,7 +18,7 @@ const cardStyles = (isDark, enabled, selected) => {
       padding: 0
     },
     title: {
-      color: "white",
+      color: enabled ? "white" : isDark ? "white" : "black",
       textOverflow: "ellipsis",
       maxWidth: "100px",
       overflow: "hidden",
@@ -26,7 +26,7 @@ const cardStyles = (isDark, enabled, selected) => {
       display: "block"
     },
     subheader: {
-      color: "white",
+      color: enabled ? "white" : isDark ? "white" : "black",
       textOverflow: "ellipsis",
       maxWidth: "150px",
       overflow: "hidden",
@@ -34,7 +34,7 @@ const cardStyles = (isDark, enabled, selected) => {
       display: "block"
     },
     description: {
-      color: "white",
+      color: enabled ? "white" : isDark ? "white" : "black",
       textOverflow: "ellipsis",
       maxWidth: "250px",
       overflow: "hidden",
