@@ -1,4 +1,5 @@
 extension/
+*.zip
 node_modules/
 *.swp
 *.swo
