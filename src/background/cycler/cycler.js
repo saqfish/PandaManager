@@ -49,13 +49,12 @@ const cycler = {
   }
 };
 
-const acceptPanda = panda => {
-  panda.selected = true;
-  accept(panda.link)
+const acceptPanda = id => {
+  accept(pandas[id].link)
     .then(res => {
-      panda.name = res.project.requester_name;
-      panda.description = res.project.title;
-      panda.accepted++;
+      pandas[id].name = res.project.requester_name;
+      pandas[id].description = res.project.title;
+      pandas[id].accepted = pandas[id].accepted + 1;
     })
     .catch(res => console.log(res));
 };
@@ -73,14 +72,14 @@ const cycle = data => {
 
       if (cycling) {
         if (single) {
-          let panda = pandas[data.id];
-          acceptPanda(panda);
+          acceptPanda(data.id);
+          pandas[data.id].selected = true;
           send(data.id);
           await sleep(delays.cycle);
         } else {
           for (let i in pandas) {
             if (pandas[i].enabled) {
-              acceptPanda(pandas[i]);
+              acceptPanda(i);
               pandas[i].selected = true;
               send(null);
               await sleep(delays.cycle);

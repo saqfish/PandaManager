@@ -49,7 +49,7 @@ const DetailDialog = props => {
     }
     if (
       !item.link.match(
-        /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks\/accept_random\?ref=w_pl_prvw$/
+        /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks(\/accept_random|)\?ref=w_pl_prvw$/
       )
     ) {
       setError(errors.link);
