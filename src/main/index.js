@@ -14,6 +14,7 @@ browser.runtime
         theme={res.theme}
         data={res.data}
         cycling={res.cycling}
+        single={res.single}
       />,
       document.getElementById("root")
     );
