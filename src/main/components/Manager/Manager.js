@@ -69,7 +69,6 @@ const Manager = props => {
   useEffect(() => {
     var port = browser.runtime.connect({ name: "pm_port" });
     port.onMessage.addListener(res => {
-      console.log(res);
       const { cycling, pandas, id } = res;
       setID(id);
       setCycling(cycling);

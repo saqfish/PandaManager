@@ -51,7 +51,6 @@ const ManagerAppBar = props => {
           </Tooltip>
           <Tooltip title="Add">
             <IconButton
-              disabled={cycling}
               className={classes.add}
               onClick={() => setDialog({ open: true, type: 1 })}
               disableElevation

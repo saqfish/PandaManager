@@ -30,8 +30,6 @@ const PandaCard = props => {
 
   const classes = useStyles();
 
-  console.log(single);
-
   return (
     <div style={container}>
       <Card classes={{ root: classes.root }}>
@@ -82,7 +80,6 @@ const PandaCard = props => {
             {cycling && single ? "Stop" : "Start"}
           </Button>
           <Button
-            disabled={cycling}
             variant="contained"
             color={isDark ? "primary" : "default"}
             onClick={() => showDetails(data)}
