@@ -19,6 +19,7 @@ import { container, cardStyles } from "./styles";
 
 const PandaCard = props => {
   const data = props.data;
+  const single = props.single;
   const showDetails = props.func;
   const { cycling, setCycling, updateInList, removeFromList } = useContext(
     ListContext
@@ -28,6 +29,8 @@ const PandaCard = props => {
   const useStyles = makeStyles(cardStyles(isDark, data.enabled, data.selected));
 
   const classes = useStyles();
+
+  console.log(single);
 
   return (
     <div style={container}>
@@ -61,7 +64,7 @@ const PandaCard = props => {
         </CardContent>
         <CardActions>
           <Button
-            disabled={cycling}
+            disabled={cycling && !single}
             variant="contained"
             color={isDark ? "primary" : "default"}
             onClick={() =>
@@ -76,7 +79,7 @@ const PandaCard = props => {
             }
             disableElevation
           >
-            Start
+            {cycling && single ? "Stop" : "Start"}
           </Button>
           <Button
             disabled={cycling}
@@ -88,7 +91,6 @@ const PandaCard = props => {
             Details
           </Button>
           <Switch
-            disabled={cycling}
             onChange={event => {
               updateInList(data, { ...data, enabled: event.target.checked });
             }}

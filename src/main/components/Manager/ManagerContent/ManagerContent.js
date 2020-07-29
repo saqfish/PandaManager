@@ -10,7 +10,7 @@ import { ListContext } from "../context";
 import style from "./styles";
 
 const ManagerContent = () => {
-  const { list, showDetails } = useContext(ListContext);
+  const { list, id, showDetails } = useContext(ListContext);
 
   const isDark = useTheme().palette.type == "dark";
   const useStyles = makeStyles(style(isDark));
@@ -18,8 +18,8 @@ const ManagerContent = () => {
 
   return (
     <Paper className={classes.container} elevation={0} square>
-      {list.map(data => (
-        <PandaCard data={data} func={showDetails} />
+      {list.map((data, i) => (
+        <PandaCard data={data} single={id==i} func={showDetails} />
       ))}
     </Paper>
   );

@@ -5,25 +5,28 @@ let innerTimeout = null;
 let clients = [];
 let cycling = false;
 
+let pandas;
+let delays;
+
 const sleep = ms =>
   new Promise(resolve => {
     innerTimeout = setTimeout(resolve, ms);
   });
 
-const clearSelected = pandas => {
+const clearSelected = () => {
   for (let panda of pandas) panda.selected = false;
 };
 
-const checkEnabled = pandas => {
+const checkEnabled = () => {
   for (let panda of pandas) if (panda.enabled) return true;
   return false;
 };
 
-const send = (pandas, client) => {
-  for (client of clients) {
+const send = id => {
+  for (let client of clients) {
     if (client != null) {
       try {
-        client.postMessage({ cycling, pandas });
+        client.postMessage({ cycling, pandas, id });
       } catch (error) {
         clients = clients.filter(cClient => cClient != client);
       }
@@ -34,6 +37,8 @@ const send = (pandas, client) => {
 const cycler = {
   cycling: () => cycling,
   setCycling: value => (cycling = value),
+  setPandas: value => (pandas = value),
+  setDelays: value => (delays = value),
   addClient: value => clients.push(value),
   clients: () => clients,
   removeClient: value => {
@@ -55,17 +60,13 @@ const acceptPanda = panda => {
     .catch(res => console.log(res));
 };
 
-const cycle = (values, data) => {
-  const { pandas, delays } = values;
+const cycle = data => {
   const { single } = data;
-
-  clearSelected(pandas);
-
-  send(pandas, clients);
 
   return new Promise(async (resolve, reject) => {
     clearTimeout(timeout);
     timeout = null;
+    clearSelected();
 
     if (pandas.length > 0) {
       resolve(cycling);
@@ -74,25 +75,24 @@ const cycle = (values, data) => {
         if (single) {
           let panda = pandas[data.id];
           acceptPanda(panda);
-          send(pandas, clients);
+          send(data.id);
           await sleep(delays.cycle);
-          panda.selected = false;
         } else {
-          for (let panda of pandas) {
-            if (panda.enabled) {
-              panda.selected = true;
-              acceptPanda(panda);
-              send(pandas, clients);
+          for (let i in pandas) {
+            if (pandas[i].enabled) {
+              acceptPanda(pandas[i]);
+              pandas[i].selected = true;
+              send(null);
               await sleep(delays.cycle);
-              panda.selected = false;
+              pandas[i].selected = false;
             }
           }
         }
-        cycle(values, data);
+        cycle(data);
       } else {
         if (innerTimeout) clearTimeout(innerTimeout);
-        clearSelected(pandas);
-        send(pandas, clients);
+        clearSelected();
+        send(null);
       }
     } else reject();
   });

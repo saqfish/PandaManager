@@ -49,8 +49,10 @@ const dispatcher = value => {
         });
       },
       [messages.cycle]: data => {
+        cycler.setPandas(settingsValues().pandas);
+        cycler.setDelays(settingsValues().delays);
         cycler.toggle(settingsValues().pandas);
-        cycle(settingsValues(), data)
+        cycle(data)
           .then(cycling => {
             resolve(cycling);
           })
@@ -65,6 +67,8 @@ const dispatcher = value => {
         setSettingsValues({ ...settingsValues(), ...data });
         setSound(typeof data.beep == "undefined" ? 0 : data.beep);
         saveSettings();
+        cycler.setPandas(settingsValues().pandas);
+        cycler.setDelays(settingsValues().delays);
         resolve(true);
       },
       [messages.openPage]: data => {

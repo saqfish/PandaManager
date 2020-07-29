@@ -19,6 +19,7 @@ const Manager = props => {
   const [list, setList] = useState(props.data.pandas);
   const [delays, setDelays] = useState(props.data.delays);
   const [cycling, setCycling] = useState(props.cycling);
+  const [id, setID] = useState(null);
   const [bottomBarVisible, setBottomBarVisible] = useState(false);
   const [dialog, setDialog] = useState({ open: false, type: null });
 
@@ -68,7 +69,9 @@ const Manager = props => {
   useEffect(() => {
     var port = browser.runtime.connect({ name: "pm_port" });
     port.onMessage.addListener(res => {
-      const { cycling, pandas } = res;
+      console.log(res);
+      const { cycling, pandas, id } = res;
+      setID(id);
       setCycling(cycling);
       setList(pandas);
     });
@@ -80,7 +83,7 @@ const Manager = props => {
   return (
     <ListContext.Provider
       value={{
-        cycling, setCycling,
+        cycling, setCycling, id,
         list, addToList, removeFromList, updateInList,
         showDetails
       }} >
