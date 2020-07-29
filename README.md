@@ -12,7 +12,7 @@ Go to `chrome://extensions` in Chrome and turn on developer mode. Then load the 
   - `popup`: root directory for the main Popup code.
   - `docs`: root directory for the main documentation code.
   - `background`: root directory for the main background extension code.
-  - `misc`: miscalenous directory.
+  - `misc`: miscellaneous directory.
     - `img`: image asses loaded by webpack
     - `util.js`: general reusable shared code
 - And all the other root react-native folders (webpack etc).
@@ -31,4 +31,4 @@ All root folders have this structure:
 
 `npm run build`
 
-You will find an `extension` directory in the root directory.
+You will find an `extension` directory in the root directory. Then follow directions for loading into Chrome.
