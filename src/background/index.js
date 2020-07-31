@@ -57,7 +57,7 @@ const dispatcher = value => {
       [messages.cycle]: data => {
         cycler.setPandas(settingsValues().pandas);
         cycler.setDelays(settingsValues().delays);
-        cycler.toggle(settingsValues().pandas);
+        cycler.toggle();
         cycle(data)
           .then(cycling => {
             resolve(cycling);

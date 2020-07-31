@@ -48,9 +48,7 @@ const cycler = {
   removeClient: value => {
     clients = clients.filter(client => client != value);
   },
-  toggle: pandas => {
-    if (pandas.length > 0 && checkEnabled(pandas)) cycling = !cycling;
-  }
+  toggle: () => (cycling = !cycling)
 };
 
 const acceptPanda = id => {
@@ -65,15 +63,16 @@ const acceptPanda = id => {
 
 const cycle = data => {
   const { single } = data;
+  console.log("cycle");
 
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async resolve => {
     clearTimeout(timeout);
     timeout = null;
     clearSelected();
 
-    if (pandas.length > 0) {
-      resolve(cycling);
+    resolve(cycling);
 
+    if (pandas.length > 0 && checkEnabled()) {
       if (cycling) {
         if (single) {
           acceptPanda(data.id);
@@ -97,7 +96,10 @@ const cycle = data => {
         clearSelected();
         send(null);
       }
-    } else reject();
+    } else {
+      await sleep(delays.cycle);
+      cycle(data);
+    }
   });
 };
 
