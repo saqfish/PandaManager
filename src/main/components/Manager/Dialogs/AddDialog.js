@@ -41,18 +41,14 @@ const AddDialog = props => {
     CardActions
   );
 
-  const errors = { empty: "Fields cannot be empty", link: "Invalid link" };
+  const errors = { empty: "Link field cannot be empty", link: "Invalid link" };
 
   const useStyles = makeStyles(messageDialogStyles.msgInput);
   const classes = useStyles();
   const [error, setError] = useState();
 
   const validateItems = () => {
-    if (
-      item.name.length < 1 ||
-      item.link.length < 1 ||
-      item.description.length < 1
-    ) {
+    if (item.link.length < 1) {
       setError(errors.empty);
       return false;
     }
@@ -93,13 +89,13 @@ const AddDialog = props => {
         }
       />
       <CardContent>
-        <RequesterInput
-          data={{ value: item.name, classes }}
-          func={handleRequesterNameChange}
-        />
         <PandaLinkInput
           data={{ value: item.link, classes }}
           func={handlePandaLinkChange}
+        />
+        <RequesterInput
+          data={{ value: item.name, classes }}
+          func={handleRequesterNameChange}
         />
         <DescriptionInput
           data={{ value: item.description, classes }}

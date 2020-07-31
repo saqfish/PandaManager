@@ -50,6 +50,7 @@ const pandaButton = hit => {
   const button = document.createElement("button");
   button.textContent = "P";
   button.style.backgroundColor = "indianred";
+  button.style.color = "white";
   button.style.maxWidth = "26px";
   button.onclick = () => {
     const item = {
