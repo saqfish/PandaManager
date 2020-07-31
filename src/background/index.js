@@ -52,7 +52,7 @@ const dispatcher = value => {
       [messages.addPanda]: data => {
         settingsValues().pandas.push({
           ...data,
-          tableData: { id: settingsValues().pandas.length + 1 }
+          tableData: { id: settingsValues().pandas.length }
         });
         cycler.updatePandas(settingsValues().pandas);
         resolve(true);
