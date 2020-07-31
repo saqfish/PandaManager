@@ -40,7 +40,6 @@ const Manager = props => {
   };
 
   const updateInList = (id, newItem) => {
-    console.log(`update ${id}`);
     setList(prev => prev.map((item, i) => (i == id ? newItem : item)));
   };
 
