@@ -23,7 +23,8 @@ import { messageDialogStyles } from "./styles";
 
 const DetailDialog = props => {
   const close = props.close;
-  const [item, setItem] = useState(props.data);
+  const [item, setItem] = useState(props.data.item);
+  const id = props.data.id;
   const { updateInList } = useContext(ListContext);
 
   const oldItem = useRef(item);
@@ -113,7 +114,7 @@ const DetailDialog = props => {
           color="primary"
           onClick={() => {
             if (validateItems()) {
-              updateInList(oldItem.current, item);
+              updateInList(id, item);
               close();
             }
           }}

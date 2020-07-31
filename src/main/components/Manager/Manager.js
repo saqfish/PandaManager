@@ -25,27 +25,23 @@ const Manager = props => {
 
   const loadedRef = useRef(false);
 
-  const updateDelays = items => { setDelays(items); };
-
-  const addToList = item => {
-    setList(prev => [
-      ...prev,
-      { ...item, tableData: { id: list.length } }
-    ]);
+  const updateDelays = items => {
+    setDelays(items);
   };
 
-  const removeFromList = item =>
-    setList(prev =>
-      prev.filter(value => value.tableData.id != item.tableData.id)
-    );
+  const addToList = item => {
+    setList(prev => [...prev, { ...item }]);
+  };
 
-  const updateInList = (oldItem, newItem) => {
-    setList(prev =>
-      prev.map((value, index) =>
-        index == oldItem.tableData.id
-          ? { ...newItem, tableData: { id: oldItem.tableData.id } } : value
-      )
-    );
+  const removeFromList = id => {
+    let nList = [...list];
+    nList.splice(id, 1);
+    setList(nList);
+  };
+
+  const updateInList = (id, newItem) => {
+    console.log(`update ${id}`);
+    setList(prev => prev.map((item, i) => (i == id ? newItem : item)));
   };
 
   const sendList = values =>
@@ -57,7 +53,8 @@ const Manager = props => {
   const onDialogClose = () =>
     setDialog({ open: false, type: null, data: null });
 
-  const showDetails = item => setDialog({ open: true, type: 2, data: item });
+  const showDetails = id =>
+    setDialog({ open: true, type: 2, data: { id, item: list[id] } });
 
   useEffect(() => {
     if (loadedRef.current) {
@@ -82,14 +79,20 @@ const Manager = props => {
   return (
     <ListContext.Provider
       value={{
-        cycling, setCycling, id,
-        list, addToList, removeFromList, updateInList,
+        cycling,
+        setCycling,
+        id,
+        list,
+        addToList,
+        removeFromList,
+        updateInList,
         showDetails
-      }} >
-
+      }}
+    >
       <ManagerAppBar
         data={{ list, title: "Panda Manager", cycling, bottomBarVisible }}
-        func={{ setDialog, setCycling, setBottomBarVisible }} />
+        func={{ setDialog, setCycling, setBottomBarVisible }}
+      />
 
       <DelayContext.Provider value={{ delays, updateDelays }}>
         {bottomBarVisible ? <ManagerToolbar /> : null}
@@ -102,7 +105,6 @@ const Manager = props => {
           <DetailDialog data={dialog.data} close={onDialogClose} />
         ) : null}
       </Dialog>
-
     </ListContext.Provider>
   );
 };

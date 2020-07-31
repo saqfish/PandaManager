@@ -20,6 +20,7 @@ import { container, cardStyles } from "./styles";
 const PandaCard = props => {
   const data = props.data;
   const single = props.single;
+  const id = props.id;
   const showDetails = props.func;
   const { cycling, setCycling, updateInList, removeFromList } = useContext(
     ListContext
@@ -42,7 +43,7 @@ const PandaCard = props => {
           action={
             <IconButton
               disabled={cycling}
-              onClick={() => removeFromList(data)}
+              onClick={() => removeFromList(id)}
               aria-label="delete"
               classes={{ root: classes.deleteButton }}
             >
@@ -68,7 +69,7 @@ const PandaCard = props => {
             onClick={() =>
               sendToBackground(messages.cycle, {
                 single: true,
-                id: data.tableData.id
+                id
               })
                 .then(res => {
                   setCycling(res);
@@ -82,7 +83,7 @@ const PandaCard = props => {
           <Button
             variant="contained"
             color={isDark ? "primary" : "default"}
-            onClick={() => showDetails(data)}
+            onClick={() => showDetails(id)}
             disableElevation
           >
             Details

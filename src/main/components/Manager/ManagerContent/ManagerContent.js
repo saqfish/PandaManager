@@ -19,7 +19,7 @@ const ManagerContent = () => {
   return (
     <Paper className={classes.container} elevation={0} square>
       {list.map((data, i) => (
-        <PandaCard data={data} single={id==i} func={showDetails} />
+        <PandaCard data={data} id={i} single={id==i} func={showDetails} />
       ))}
     </Paper>
   );

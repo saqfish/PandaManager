@@ -50,10 +50,7 @@ const dispatcher = value => {
         });
       },
       [messages.addPanda]: data => {
-        settingsValues().pandas.push({
-          ...data,
-          tableData: { id: settingsValues().pandas.length }
-        });
+        settingsValues().pandas.push(data);
         cycler.updatePandas(settingsValues().pandas);
         resolve(true);
       },

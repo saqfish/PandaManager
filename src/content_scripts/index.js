@@ -20,6 +20,7 @@ window.addEventListener("load", () => {
     const cell = cells[i];
     let button = pandaButton(hits[i-1]);
     addToCell(button, cell);
+    addToCell(button, cell);
   }
 });
 
