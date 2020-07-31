@@ -38,6 +38,10 @@ const cycler = {
   cycling: () => cycling,
   setCycling: value => (cycling = value),
   setPandas: value => (pandas = value),
+  updatePandas: value => {
+    pandas = value;
+    send(null);
+  },
   setDelays: value => (delays = value),
   addClient: value => clients.push(value),
   clients: () => clients,

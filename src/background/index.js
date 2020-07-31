@@ -20,6 +20,7 @@ const { loadAudio, setSound, sound } = PMAudio(); // eslint-disable-line
 let docsData = { page: 0 };
 
 const dispatcher = value => {
+  console.log(value);
   return new Promise((resolve, reject) => {
     const dispatch = {
       [messages.initMain]: () => {
@@ -47,6 +48,14 @@ const dispatcher = value => {
           theme: settingsValues().theme,
           data: docsData
         });
+      },
+      [messages.addPanda]: data => {
+        settingsValues().pandas.push({
+          ...data,
+          tableData: { id: settingsValues().pandas.length + 1 }
+        });
+        cycler.updatePandas(settingsValues().pandas);
+        resolve(true);
       },
       [messages.cycle]: data => {
         cycler.setPandas(settingsValues().pandas);
@@ -130,6 +139,11 @@ async function background() {
           .catch(res => reject(res));
       })
   );
+
+  browser.runtime.onMessageExternal.addListener((request, sender) => {
+    console.log(sender);
+    console.log(request);
+  });
 }
 
 background();
