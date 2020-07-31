@@ -90,7 +90,7 @@ const PandaCard = props => {
           </Button>
           <Switch
             onChange={event => {
-              updateInList(data, { ...data, enabled: event.target.checked });
+              updateInList(id, { ...data, enabled: event.target.checked });
             }}
             checked={data.enabled}
             color={isDark ? "primary" : "default"}
