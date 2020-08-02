@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 
 import PMSettings from "./settings";
-import PMAudio from "./audio/audios";
 
 import { open } from "miscUtils";
 import { messages } from "./constants";
@@ -14,8 +13,6 @@ const {
 } = PMSettings();
 
 import { cycler, cycle } from "./cycler/cycler";
-
-const { loadAudio, setSound, sound } = PMAudio(); // eslint-disable-line
 
 let docsData = { page: 0 };
 
@@ -57,6 +54,7 @@ const dispatcher = value => {
       [messages.cycle]: data => {
         cycler.setPandas(settingsValues().pandas);
         cycler.setDelays(settingsValues().delays);
+        cycler.setAudio(settingsValues().beep);
         cycler.toggle();
         cycle(data)
           .then(cycling => {
@@ -71,10 +69,10 @@ const dispatcher = value => {
       },
       [messages.setSettingsValues]: data => {
         setSettingsValues({ ...settingsValues(), ...data });
-        setSound(typeof data.beep == "undefined" ? 0 : data.beep);
         saveSettings();
         cycler.setPandas(settingsValues().pandas);
         cycler.setDelays(settingsValues().delays);
+        cycler.setAudio(settingsValues().beep);
         resolve(true);
       },
       [messages.openPage]: data => {
@@ -119,7 +117,7 @@ const dispatcher = value => {
 
 async function background() {
   await loadSettings();
-  await loadAudio(settingsValues().beep);
+  await cycler.load(settingsValues().beep);
 
   browser.runtime.onConnect.addListener(port => {
     cycler.addClient(port);

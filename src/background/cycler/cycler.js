@@ -1,4 +1,6 @@
 import { accept } from "../util";
+import PMAudio from "../audio/audios";
+const { loadAudio, setSound, sound } = PMAudio();
 
 let timeout = null;
 let innerTimeout = null;
@@ -35,14 +37,20 @@ const send = id => {
 };
 
 const cycler = {
+  load: async beep => {
+    loadAudio(beep);
+  },
   cycling: () => cycling,
   setCycling: value => (cycling = value),
   setPandas: value => (pandas = value),
+  setDelays: value => (delays = value),
+  setAudio: value => {
+    setSound(typeof value == "undefined" ? 0 : value);
+  },
   updatePandas: value => {
     pandas = value;
     send(null);
   },
-  setDelays: value => (delays = value),
   addClient: value => clients.push(value),
   clients: () => clients,
   removeClient: value => {
@@ -57,6 +65,7 @@ const acceptPanda = id => {
       pandas[id].name = res.project.requester_name;
       pandas[id].description = res.project.title;
       pandas[id].accepted = pandas[id].accepted + 1;
+      sound().play();
     })
     .catch(res => console.log(res));
 };
