@@ -16,8 +16,10 @@ import { cycler, cycle } from "./cycler/cycler";
 
 let docsData = { page: 0 };
 
-const dispatcher = value => {
-  console.log(value);
+const dispatcher = (value, sender) => {
+  const from = sender.url.match(/^chrome-extension:\/\/.{32}\/(.*).html/);
+  const fromOptions = from != null && from[1] == "options";
+
   return new Promise((resolve, reject) => {
     const dispatch = {
       [messages.initMain]: () => {
@@ -68,7 +70,15 @@ const dispatcher = value => {
         resolve(true);
       },
       [messages.setSettingsValues]: data => {
-        setSettingsValues({ ...settingsValues(), ...data });
+        const checkedData = !fromOptions
+          ? { ...settingsValues(), ...data }
+          : { ...settingsValues(), ...data,
+            pandas: settingsValues().pandas,
+            delays: settingsValues().delays
+          };
+
+        setSettingsValues(checkedData);
+
         saveSettings();
         cycler.setPandas(settingsValues().pandas);
         cycler.setDelays(settingsValues().delays);
@@ -127,9 +137,9 @@ async function background() {
   });
 
   browser.runtime.onMessage.addListener(
-    message =>
+    (message, sender) =>
       new Promise(async (resolve, reject) => {
-        await dispatcher(message)
+        await dispatcher(message, sender)
           .then(res => resolve(res))
           .catch(res => reject(res));
       })
