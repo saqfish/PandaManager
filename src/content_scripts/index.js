@@ -18,8 +18,8 @@ window.addEventListener("load", () => {
 
   for (let i = 1; i < cells.length; i++) {
     const cell = cells[i];
-    let pButton = pandaButton(hits[i-1]);
-    let oButton = pandaOnceButton(hits[i-1]);
+    let pButton = pandaButton(hits[i - 1]);
+    let oButton = pandaOnceButton(hits[i - 1]);
     addToCell(pButton, cell);
     addToCell(oButton, cell);
   }
@@ -39,9 +39,11 @@ const pandaOnceButton = hit => {
       single: false,
       enabled: true
     };
-    sendToBackground(messages.addPanda, item).then(res => {
-      console.log(res);
-    });
+    sendToBackground(messages.addPanda, item)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(() => alert("Couldn't send to Panda Manager!. Try refreshing."));
   };
   return button;
 };
@@ -61,9 +63,11 @@ const pandaButton = hit => {
       single: false,
       enabled: false
     };
-    sendToBackground(messages.addPanda, item).then(res => {
-      console.log(res);
-    });
+    sendToBackground(messages.addPanda, item)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(() => alert("Couldn't send to Panda Manager!. Try refreshing."));
   };
   return button;
 };

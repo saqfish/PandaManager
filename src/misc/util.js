@@ -1,7 +1,11 @@
 import * as browser from "webextension-polyfill";
 
 const sendToBackground = (type, data) => {
-  return browser.runtime.sendMessage({ type, data });
+  try {
+    return browser.runtime.sendMessage({ type, data });
+  } catch {
+    return Promise.reject();
+  }
 };
 
 const openInWindow = url => {
@@ -36,7 +40,7 @@ const copyToClipboard = value => {
       .then(() => {
         resolve();
       })
-      .catch((error) => {
+      .catch(error => {
         reject(error);
       });
   });
