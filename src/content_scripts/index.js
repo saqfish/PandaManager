@@ -2,28 +2,37 @@ import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
 window.addEventListener("load", () => {
-  const mainContent = document.getElementById("MainContent");
-
-  const table = mainContent.querySelectorAll("[data-react-props]")[2];
-
-  const cells = table.getElementsByTagName("li");
-
-  const dataset = table.dataset;
-
-  const props = dataset.reactProps;
-
-  const data = JSON.parse(props);
-
-  const hits = data.bodyData;
-
-  for (let i = 1; i < cells.length; i++) {
-    const cell = cells[i];
-    let pButton = pandaButton(hits[i - 1]);
-    let oButton = pandaOnceButton(hits[i - 1]);
-    addToCell(pButton, cell);
-    addToCell(oButton, cell);
-  }
+  setupOnSite[checkURL(window.location.href)]();
 });
+
+const sites = [
+  "https://worker.mturk.com/",
+  "https://worker.mturk.com/?hit_forker"
+];
+
+const checkURL = url => (sites.includes(url) ? url : "other");
+
+const setupOnSite = {
+  ["https://worker.mturk.com/"]: () => {
+    const mainContent = document.getElementById("MainContent");
+    const table = mainContent.querySelectorAll("[data-react-props]")[2];
+    const cells = table.getElementsByTagName("li");
+    const dataset = table.dataset;
+    const props = dataset.reactProps;
+    const data = JSON.parse(props);
+    const hits = data.bodyData;
+
+    for (let i = 1; i < cells.length; i++) {
+      const cell = cells[i];
+      let pButton = pandaButton(hits[i - 1]);
+      let oButton = pandaOnceButton(hits[i - 1]);
+      addToCell(pButton, cell);
+      addToCell(oButton, cell);
+    }
+  },
+  ["https://worker.mturk.com/?hit_forker"]: () => console.log("HitForker"),
+  ["other"]: () => null
+};
 
 const pandaOnceButton = hit => {
   const button = document.createElement("button");
