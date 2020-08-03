@@ -1,4 +1,4 @@
-import React , { useContext} from "react";
+import React, { useContext } from "react";
 
 import List from "@material-ui/core/List";
 
@@ -8,17 +8,11 @@ import DarkThemeListItem from "./DarkThemeListItem";
 import WindowListItem from "./WindowListItem";
 
 import { optionsContext } from "optionsContext";
+import style from "./styles";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    width: "100%"
-  },
-  inline: {
-    display: "inline"
-  }
-}));
+const useStyles = makeStyles(style);
 
-const Appearance = ()  => {
+const Appearance = () => {
   const [settings, setSettings] = useContext(optionsContext);
   const classes = useStyles();
 

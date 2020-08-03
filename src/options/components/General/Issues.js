@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -13,7 +13,6 @@ import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
 const Issues = () => {
-  const inputRef = useRef(null);
 
   return (
     <>
@@ -40,24 +39,6 @@ const Issues = () => {
           </Button>
         </ListItemSecondaryAction>
       </ListItem>
-      <input
-        crossOrigin="anonymous"
-        type="file"
-        id="file"
-        ref={inputRef}
-        onChange={e => {
-          let file = e.target.files[0];
-          let reader = new FileReader();
-
-          reader.onloadend = function() {
-            var backupData = reader.result.replace(/^data:.+;base64,/, "");
-            sendToBackground(messages.backup, { load: true, backupData });
-          };
-
-          reader.readAsDataURL(file);
-        }}
-        style={{ display: "none" }}
-      />
     </>
   );
 };

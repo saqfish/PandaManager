@@ -7,21 +7,12 @@ import Avatar from "@material-ui/core/Avatar";
 
 import BackupPanel from "./BackupPanel";
 import Issues from "./Issues";
+import style from "./styles";
 
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 
 import { version } from "manifest";
-const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-    display: "flex",
-    flexDirection: "column"
-  },
-  pos: {
-    marginBottom: 12
-  },
-  logo: {}
-});
+const useStyles = makeStyles(style);
 
 export default function General() {
   const theme = useTheme();

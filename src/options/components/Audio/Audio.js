@@ -9,25 +9,18 @@ import Dialog from "@material-ui/core/Dialog";
 
 import { makeStyles } from "@material-ui/core/styles";
 
+import style from "./styles";
+
 import { optionsContext } from "optionsContext";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    width: "100%"
-  },
-  inline: {
-    display: "inline"
-  }
-}));
+const useStyles = makeStyles(style);
 
 const Audio = () => {
   const [settings, setSettings] = useContext(optionsContext);
 
   const [open, setOpen] = useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => setOpen(false);
 
   const audios = [1, 2, 3, 4];
 
@@ -43,8 +36,8 @@ const Audio = () => {
       <List className={classes.root}>
         <ListItem button onClick={() => setOpen(!open)}>
           <ListItemText
-            primary="Default sound"
-            secondary={`Sound ${settings.beep}`}
+            primary="Alarm audio"
+            secondary={`Audio ${settings.beep}`}
           />
         </ListItem>
       </List>
@@ -53,9 +46,7 @@ const Audio = () => {
         aria-labelledby="audio-number-dialog"
         open={open}
       >
-        <DialogTitle id="audio-number-dialog-title">
-          Select Audio
-        </DialogTitle>
+        <DialogTitle id="audio-number-dialog-title">Select Audio</DialogTitle>
         <List>
           {audios.map(number => (
             <ListItem
@@ -64,7 +55,7 @@ const Audio = () => {
               button
               onClick={() => handleAudioChange(number)}
             >
-              <ListItemText primary={`Sound ${number}`} />
+              <ListItemText primary={`Audio ${number}`} />
             </ListItem>
           ))}
         </List>
