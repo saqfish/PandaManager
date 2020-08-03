@@ -13,6 +13,10 @@ const cardStyles = (isDark, enabled, selected) => {
     root: {
       backgroundColor: enabled ? enabledBg : disabledBg
     },
+    avatar: {
+      color: isDark ? "white" : "black",
+      backgroundColor: isDark ? "#3f51b5" : "#e0e0e0"
+    },
     deleteButton: {
       color: "white",
       padding: 0

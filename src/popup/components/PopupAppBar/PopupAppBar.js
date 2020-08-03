@@ -1,12 +1,12 @@
 import React from "react";
 
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+import IconButton from "@material-ui/core/Button";
 import LaunchIcon from "@material-ui/icons/Launch";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
@@ -24,23 +24,22 @@ const PopupAppBar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.toolbar}>
-        <Toolbar variant="dense">
+      <AppBar elevation={0} position="static">
+        <Toolbar className={classes.toolbar} variant="dense">
           <Typography variant="h6" className={classes.title}>
             Panda Manager
           </Typography>
-          <ButtonGroup
-            color="primary"
-            aria-label="bar buttons"
-          >
-            <Button
+          <Tooltip title="Open">
+            <IconButton
               className={classes.main}
               onClick={() => sendToBackground(messages.openPage, "main.html")}
               disableElevation
             >
               <LaunchIcon />
-            </Button>
-            <Button
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Settings">
+            <IconButton
               className={classes.settings}
               onClick={() =>
                 sendToBackground(messages.openPage, "options.html")
@@ -48,8 +47,8 @@ const PopupAppBar = () => {
               disableElevation
             >
               <SettingsIcon />
-            </Button>
-          </ButtonGroup>
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
     </div>

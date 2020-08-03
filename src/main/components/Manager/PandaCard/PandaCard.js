@@ -38,7 +38,11 @@ const PandaCard = props => {
       <Card classes={{ root: classes.root }}>
         <CardHeader
           avatar={
-            <Avatar variant="square" aria-label="timer">
+            <Avatar
+              classes={{ root: classes.avatar }}
+              variant="square"
+              aria-label="timer"
+            >
               {data.accepted}
             </Avatar>
           }

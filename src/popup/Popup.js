@@ -83,6 +83,7 @@ const Popup = props => {
               variant="contained"
               color="primary"
               onClick={handleCycleChange}
+              disableElevation
             >
               {cycling ? "Stop" : "Start"}
             </Button>
@@ -93,7 +94,11 @@ const Popup = props => {
           {data.map((item, i) => (
             <ListItem selected={item.selected && item.enabled} dense={true}>
               <ListItemAvatar>
-                <Avatar variant="square" aria-label="accepted">
+                <Avatar
+                  classes={{ root: classes.avatar }}
+                  variant="square"
+                  aria-label="accepted"
+                >
                   {item.accepted}
                 </Avatar>
               </ListItemAvatar>
@@ -102,6 +107,7 @@ const Popup = props => {
                 <Tooltip title={item.enabled ? "Disable" : "Enable"}>
                   <Switch
                     checked={item.enabled}
+                    color="primary"
                     onChange={() => handleEnabledChange(i)}
                   />
                 </Tooltip>
