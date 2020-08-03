@@ -21,7 +21,7 @@ export default function General() {
 
   return (
     <div className={classes.root}>
-      <Card className={classes.logoCard}>
+      <Card elevation={0} className={classes.logoCard}>
         <CardHeader
           avatar={
             <Avatar

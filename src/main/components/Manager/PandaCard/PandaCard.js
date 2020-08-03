@@ -35,7 +35,7 @@ const PandaCard = props => {
 
   return (
     <div style={container}>
-      <Card classes={{ root: classes.root }}>
+      <Card elevation={0} variant="outlined" classes={{ root: classes.root }}>
         <CardHeader
           avatar={
             <Avatar
