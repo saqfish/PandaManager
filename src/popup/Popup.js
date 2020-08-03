@@ -17,6 +17,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Switch from "@material-ui/core/Switch";
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
 
 import PopupAppBar from "./components/PopupAppBar/PopupAppBar";
 
@@ -62,29 +63,46 @@ const Popup = props => {
       .catch(() => setCycling(false));
   };
 
+  const handleEnabledChange = id => {
+    const pandas = [...data];
+    pandas[id].enabled = !pandas[id].enabled;
+    sendToBackground(messages.setSettingsValues, { pandas }).then(res =>
+      setData(res.pandas)
+    );
+  };
+
   return (
     <ThemeProvider theme={mainTheme}>
       <CssBaseline />
       <div className={classes.root}>
         <PopupAppBar />
         <List>
-          <ListItem dense={true}>
-            <ListItemText primary={"Cycle"} />
-            <ListItemSecondaryAction>
-              <Switch checked={cycling} onChange={handleCycleChange} />
-            </ListItemSecondaryAction>
+          <ListItem classes={{ root: classes.cycle }} dense={true}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCycleChange}
+            >
+              {cycling ? "Stop" : "Start"}
+            </Button>
           </ListItem>
         </List>
         <Divider />
-        <List className={classes.pandas}>
-          {data.map(item => (
-            <ListItem selected={item.selected} dense={true}>
+        <List className={classes.list}>
+          {data.map((item, i) => (
+            <ListItem selected={item.selected && item.enabled} dense={true}>
               <ListItemAvatar>
                 <Avatar variant="square" aria-label="accepted">
                   {item.accepted}
                 </Avatar>
               </ListItemAvatar>
               <ListItemText primary={item.name} />
+              <ListItemSecondaryAction className={classes.actions}>
+                <Switch
+                  checked={item.enabled}
+                  onChange={() => handleEnabledChange(i)}
+                />
+              </ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>

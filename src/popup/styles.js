@@ -5,10 +5,15 @@ const style = () => {
       display: "flex",
       flexDirection: "column"
     },
-    pandas: {
+    list: {
       maxHeight: 300,
       overflowY: 'auto',
-    }
+    },
+    cycle: {
+      display: "flex",
+      justifyContent: "flex-end",
+    },
+    actions: { }
   };
 };
 
