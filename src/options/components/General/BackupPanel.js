@@ -11,10 +11,16 @@ import BackupIcon from "@material-ui/icons/Backup";
 import LoadIcon from "@material-ui/icons/Publish";
 import SaveIcon from "@material-ui/icons/Save";
 
+import { makeStyles } from "@material-ui/core/styles";
+
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
+import style from "./styles";
+const useStyles = makeStyles(style);
+
 const BackupPanel = () => {
+  const classes = useStyles();
   const inputRef = useRef(null);
 
   return (
@@ -28,6 +34,9 @@ const BackupPanel = () => {
         <ListItemText primary="Backup" secondary="" />
         <ListItemSecondaryAction>
           <Button
+            variant="contained"
+            color="primary"
+            classes={{ root: classes.button }}
             onClick={() => {
               inputRef.current.click();
             }}
@@ -36,6 +45,8 @@ const BackupPanel = () => {
             Load
           </Button>
           <Button
+            variant="contained"
+            color="primary"
             onClick={() => {
               sendToBackground(messages.backup, { load: false });
             }}

@@ -7,7 +7,8 @@ const style = {
   pos: {
     marginBottom: 12
   },
-  logo: {}
+  logo: {},
+  button: { marginRight: 5 }
 };
 
 export default style;

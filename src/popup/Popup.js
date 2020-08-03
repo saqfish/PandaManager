@@ -18,6 +18,7 @@ import Switch from "@material-ui/core/Switch";
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import PopupAppBar from "./components/PopupAppBar/PopupAppBar";
 
@@ -98,10 +99,12 @@ const Popup = props => {
               </ListItemAvatar>
               <ListItemText primary={item.name} />
               <ListItemSecondaryAction className={classes.actions}>
-                <Switch
-                  checked={item.enabled}
-                  onChange={() => handleEnabledChange(i)}
-                />
+                <Tooltip title={item.enabled ? "Disable" : "Enable"}>
+                  <Switch
+                    checked={item.enabled}
+                    onChange={() => handleEnabledChange(i)}
+                  />
+                </Tooltip>
               </ListItemSecondaryAction>
             </ListItem>
           ))}
