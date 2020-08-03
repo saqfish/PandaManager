@@ -19,7 +19,6 @@ let docsData = { page: 0 };
 const dispatcher = (value, sender) => {
   const from = sender.url.match(/^chrome-extension:\/\/.{32}\/(.*).html/);
   const fromOptions = from != null && from[1] == "options";
-
   return new Promise((resolve, reject) => {
     const dispatch = {
       [messages.initMain]: () => {
@@ -51,6 +50,7 @@ const dispatcher = (value, sender) => {
       [messages.addPanda]: data => {
         settingsValues().pandas.push(data);
         cycler.updatePandas(settingsValues().pandas);
+        saveSettings();
         resolve(true);
       },
       [messages.cycle]: data => {
@@ -83,7 +83,7 @@ const dispatcher = (value, sender) => {
         cycler.setPandas(settingsValues().pandas);
         cycler.setDelays(settingsValues().delays);
         cycler.setAudio(settingsValues().beep);
-        resolve(true);
+        resolve(settingsValues());
       },
       [messages.openPage]: data => {
         open(settingsValues().inTab, data);
