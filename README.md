@@ -1,3 +1,14 @@
+
+[![badge](https://github.com/saqfish/PandaManager/blob/master/chrome_store/ChromeWebStore_Badge_v2_206x58.png?raw=true)](https://chrome.google.com/webstore/detail/pandamanger/adbflijdhcmghdgjhahgoljbamcdpmka)
+
+This repository is the latest verson of the extension. The chrome store might be a version behind due to google's review process taking too long.
+
+## Building
+
+`npm run build`
+
+You will find an `extension` directory in the root directory. Then follow directions for loading into Chrome.
+
 ## Loading into Chrome
 
 Download the current version from the [releases page](https://github.com/saqfish/PandaManager/releases). The archive should be named `extension.zip`.
@@ -27,8 +38,3 @@ All root folders have this structure:
   - `components`: components
 
 
-## Building
-
-`npm run build`
-
-You will find an `extension` directory in the root directory. Then follow directions for loading into Chrome.
