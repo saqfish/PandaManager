@@ -42,10 +42,10 @@ const pandaOnceButton = hit => {
   button.onclick = () => {
     const item = {
       name: hit.requester_name,
-      link: `https://worker.mturk.com${hit.project_tasks_url}`,
+      link: `https://worker.mturk.com${hit.accept_project_task_url}`,
       accepted: 0,
       description: hit.description,
-      single: false,
+      alarm: true,
       enabled: true
     };
     sendToBackground(messages.addPanda, item)
@@ -66,10 +66,10 @@ const pandaButton = hit => {
   button.onclick = () => {
     const item = {
       name: hit.requester_name,
-      link: `https://worker.mturk.com${hit.project_tasks_url}`,
+      link: `https://worker.mturk.com${hit.accept_project_task_url}`,
       accepted: 0,
       description: hit.description,
-      single: false,
+      alarm: true,
       enabled: false
     };
     sendToBackground(messages.addPanda, item)
