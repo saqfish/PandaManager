@@ -65,7 +65,11 @@ const acceptPanda = id => {
       pandas[id].name = res.project.requester_name;
       pandas[id].description = res.project.title;
       pandas[id].accepted = pandas[id].accepted + 1;
-      sound().play();
+
+      if (pandas[id].alarm) {
+        sound().play();
+        pandas[id].alarm = false;
+      }
     })
     .catch(res => console.log(res));
 };

@@ -4,8 +4,8 @@ import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-const SingleCheck = props => {
-  const handleSingleChange = props.func;
+const AlarmCheck = props => {
+  const handleAlarmChange = props.func;
   const { value, classes } = props.data;
 
   return (
@@ -14,13 +14,13 @@ const SingleCheck = props => {
         control={
           <Checkbox
             checked={value}
-            onChange={handleSingleChange}
-            name="singelCheck"
+            onChange={handleAlarmChange}
+            name="alarmCheck"
           />
         }
-        label="Single"
+        label="Alarm"
       />
     </Paper>
   );
 };
-export default SingleCheck;
+export default AlarmCheck;

@@ -13,7 +13,7 @@ import CloseIcon from "@material-ui/icons/Clear";
 import RequesterInput from "./RequesterInput";
 import PandaLinkInput from "./PandaLinkInput";
 import DescriptionInput from "./DescriptionInput";
-import SingleCheck from "./SingleCheck";
+import AlarmCheck from "./AlarmCheck";
 import EnabledCheck from "./EnabledCheck";
 
 import { withStyles, makeStyles } from "@material-ui/core/styles";
@@ -61,8 +61,8 @@ const DetailDialog = props => {
     setItem(prev => ({ ...prev, link: event.target.value }));
   const handleDescriptionChange = event =>
     setItem(prev => ({ ...prev, description: event.target.value }));
-  const handleSingleChange = event =>
-    setItem(prev => ({ ...prev, single: event.target.checked }));
+  const handleAlarmChange = event =>
+    setItem(prev => ({ ...prev, alarm: event.target.checked }));
   const handleEnbledChange = event =>
     setItem(prev => ({ ...prev, enabled: event.target.checked }));
 
@@ -93,9 +93,9 @@ const DetailDialog = props => {
           data={{ value: item.description, classes }}
           func={handleDescriptionChange}
         />
-        <SingleCheck
-          data={{ value: item.single, classes }}
-          func={handleSingleChange}
+        <AlarmCheck
+          data={{ value: item.alarm, classes }}
+          func={handleAlarmChange}
         />
         <EnabledCheck
           data={{ value: item.enabled, classes }}
