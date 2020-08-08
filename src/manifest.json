@@ -31,9 +31,6 @@
     "downloads",
     "storage"
   ],
-  "externally_connectable": {
-	  "matches": [ "https://*.mturk.com/*"]
-  },
   "icons": {
     "128": "img/icon.png"
   },

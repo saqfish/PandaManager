@@ -144,11 +144,6 @@ async function background() {
           .catch(res => reject(res));
       })
   );
-
-  browser.runtime.onMessageExternal.addListener((request, sender) => {
-    console.log(sender);
-    console.log(request);
-  });
 }
 
 background();
