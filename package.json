@@ -25,12 +25,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/saqfish/Turkkey-web.git"
+    "url": "https://github.com/saqfish/PandaManager"
   },
   "author": "saqfish <saqfish@gmail.com>",
-  "license": "GPLv2",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/saqfish/Turkkey-web/issues"
+    "url": "https://github.com/saqfish/PandaManager/issues"
   },
   "dependencies": {
     "@babel/core": "^7.10.4",
