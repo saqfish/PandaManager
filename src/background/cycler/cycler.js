@@ -1,6 +1,6 @@
 import { accept } from "../util";
 import PMAudio from "../audio/audios";
-const { loadAudio, setSound, sound } = PMAudio();
+const { loadAudio, setSound, reloadAudio, sound } = PMAudio();
 
 let timeout = null;
 let innerTimeout = null;
@@ -37,8 +37,11 @@ const send = id => {
 };
 
 const cycler = {
-  load: async beep => {
-    loadAudio(beep);
+  load: async (beep, custom) => {
+    loadAudio(beep, custom);
+  },
+  reload: async (beep, custom) => {
+    reloadAudio(beep, custom);
   },
   cycling: () => cycling,
   setCycling: value => (cycling = value),
@@ -68,7 +71,6 @@ const acceptPanda = id => {
 
       if (pandas[id].alarm) {
         sound().play();
-        pandas[id].alarm = false;
       }
     })
     .catch(res => console.log(res));

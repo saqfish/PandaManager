@@ -30,7 +30,15 @@ const setupOnSite = {
       addToCell(oButton, cell);
     }
   },
-  ["https://worker.mturk.com/?hit_forker"]: () => console.log("HitForker"),
+  ["https://worker.mturk.com/?hit_forker"]: () => {
+    window.addEventListener("PM_EVENT", e => {
+      sendToBackground(messages.addPanda, e.detail)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(() => alert("Couldn't send to Panda Manager!. Try refreshing."));
+    });
+  },
   ["other"]: () => null
 };
 

@@ -19,6 +19,7 @@ const defaults = {
   settings: {
     pandas: [],
     beep: 1,
+    customAudio: null,
     delays: {
       cycle: 1000
     },

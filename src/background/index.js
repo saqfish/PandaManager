@@ -56,7 +56,6 @@ const dispatcher = (value, sender) => {
       [messages.cycle]: data => {
         cycler.setPandas(settingsValues().pandas);
         cycler.setDelays(settingsValues().delays);
-        cycler.setAudio(settingsValues().beep);
         cycler.toggle();
         cycle(data)
           .then(cycling => {
@@ -82,7 +81,7 @@ const dispatcher = (value, sender) => {
         saveSettings();
         cycler.setPandas(settingsValues().pandas);
         cycler.setDelays(settingsValues().delays);
-        cycler.setAudio(settingsValues().beep);
+        cycler.reload(settingsValues().beep, settingsValues().customAudio);
         resolve(settingsValues());
       },
       [messages.openPage]: data => {
@@ -127,7 +126,7 @@ const dispatcher = (value, sender) => {
 
 async function background() {
   await loadSettings();
-  await cycler.load(settingsValues().beep);
+  await cycler.load(settingsValues().beep, settingsValues().customAudio);
 
   browser.runtime.onConnect.addListener(port => {
     cycler.addClient(port);
