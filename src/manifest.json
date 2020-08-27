@@ -7,7 +7,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*.mturk.com/*"
+        "https://worker.mturk.com/*"
       ],
       "js": [
         "lib/js/browser-polyfill.js",
