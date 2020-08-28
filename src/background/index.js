@@ -49,13 +49,12 @@ const dispatcher = (value, sender) => {
       },
       [messages.addPanda]: data => {
         settingsValues().pandas.push(data);
-        cycler.updatePandas(settingsValues().pandas);
+        cycler.reload(settingsValues());
         saveSettings();
         resolve(true);
       },
       [messages.cycle]: data => {
-        cycler.setPandas(settingsValues().pandas);
-        cycler.setDelays(settingsValues().delays);
+        cycler.reload(settingsValues());
         cycler.toggle();
         cycle(data)
           .then(cycling => {
@@ -77,11 +76,8 @@ const dispatcher = (value, sender) => {
           };
 
         setSettingsValues(checkedData);
-
         saveSettings();
-        cycler.setPandas(settingsValues().pandas);
-        cycler.setDelays(settingsValues().delays);
-        cycler.reload(settingsValues().beep, settingsValues().customAudio);
+        cycler.reload(settingsValues());
         resolve(settingsValues());
       },
       [messages.openPage]: data => {
@@ -126,7 +122,7 @@ const dispatcher = (value, sender) => {
 
 async function background() {
   await loadSettings();
-  await cycler.load(settingsValues().beep, settingsValues().customAudio);
+  await cycler.load(settingsValues());
 
   browser.runtime.onConnect.addListener(port => {
     cycler.addClient(port);
