@@ -77,44 +77,55 @@ const Popup = props => {
       <CssBaseline />
       <div className={classes.root}>
         <PopupAppBar />
-        <List>
-          <ListItem classes={{ root: classes.cycle }} dense={true}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleCycleChange}
-              disableElevation
-            >
-              {cycling ? "Stop" : "Start"}
-            </Button>
-          </ListItem>
-        </List>
-        <Divider />
-        <List className={classes.list}>
-          {data.map((item, i) => (
-            <ListItem selected={item.selected && item.enabled} dense={true}>
-              <ListItemAvatar>
-                <Avatar
-                  classes={{ root: classes.avatar }}
-                  variant="square"
-                  aria-label="accepted"
+        {data.length ? (
+          <>
+            <List>
+              <ListItem classes={{ root: classes.cycle }} dense={true}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleCycleChange}
+                  disableElevation
                 >
-                  {item.accepted}
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={item.name} />
-              <ListItemSecondaryAction className={classes.actions}>
-                <Tooltip title={item.enabled ? "Disable" : "Enable"}>
-                  <Switch
-                    checked={item.enabled}
-                    color="primary"
-                    onChange={() => handleEnabledChange(i)}
+                  {cycling ? "Stop" : "Start"}
+                </Button>
+              </ListItem>
+            </List>
+            <Divider />
+            <List className={classes.list}>
+              {data.map((item, i) => (
+                <ListItem selected={item.selected && item.enabled} dense={true}>
+                  <ListItemAvatar>
+                    <Avatar
+                      classes={{ root: classes.avatar }}
+                      variant="square"
+                      aria-label="accepted"
+                    >
+                      {item.accepted}
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={
+                      item.name
+                        ? item.name
+                        : item.link.match(
+                          /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks(\/accept_random|)\?ref=w_pl_prvw$/)[1]
+                    }
                   />
-                </Tooltip>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-        </List>
+                  <ListItemSecondaryAction className={classes.actions}>
+                    <Tooltip title={item.enabled ? "Disable" : "Enable"}>
+                      <Switch
+                        checked={item.enabled}
+                        color="primary"
+                        onChange={() => handleEnabledChange(i)}
+                      />
+                    </Tooltip>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>{" "}
+          </>
+        ) : null}
       </div>
     </ThemeProvider>
   );
