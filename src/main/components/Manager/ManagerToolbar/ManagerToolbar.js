@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Divider from "@material-ui/core/Divider";
 
 import DelayInput from "./DelayInput";
+import PreDelayInput from "./PreDelayInput";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { DelayContext } from "../context";
@@ -24,6 +25,10 @@ const ManagerToolbar = () => {
     const temp = event.target.value;
     setDelays(prev => ({ ...prev, cycle: temp }));
   };
+  const handlePreDelayChange = event => {
+    const temp = event.target.value;
+    setDelays(prev => ({ ...prev, pre: temp }));
+  };
 
   return (
     <div className={classes.container}>
@@ -31,6 +36,10 @@ const ManagerToolbar = () => {
         <DelayInput
           data={{ value: delays.cycle, classes }}
           func={handleDelayChange}
+        />
+        <PreDelayInput
+          data={{ value: delays.pre, classes }}
+          func={handlePreDelayChange}
         />
         <Button
           disabled={delays == delaysRef.current}

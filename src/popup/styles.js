@@ -1,4 +1,4 @@
-const style = (isDark) => {
+const style = isDark => {
   return {
     root: {
       minWidth: 500,
@@ -11,13 +11,31 @@ const style = (isDark) => {
     },
     list: {
       maxHeight: 300,
-      overflowY: 'auto',
+      overflowY: "auto"
     },
     cycle: {
       display: "flex",
-      justifyContent: "flex-end",
+      justifyContent: "flex-end"
     },
-    actions: { }
+    actions: {},
+    delayForm: {
+      backgroundColor: isDark ? "#32903a" : "#ffffff",
+      display: "flex",
+      alignItems: "center",
+      padding: "2px 10px",
+      marginRight: 10
+    },
+    preDelayForm: {
+      backgroundColor: isDark ? "#B13E6E" : "#ffffff",
+      display: "flex",
+      alignItems: "center",
+      padding: "2px 10px",
+      marginRight: 5
+    },
+    input: {
+      paddingLeft: 6,
+      width: 80
+    }
   };
 };
 

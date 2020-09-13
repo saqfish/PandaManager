@@ -62,17 +62,23 @@ const cycler = {
 };
 
 const acceptPanda = id => {
-  accept(pandas[id].link)
-    .then(res => {
-      pandas[id].name = res.project.requester_name;
-      pandas[id].description = res.project.title;
-      pandas[id].accepted = pandas[id].accepted + 1;
+  return new Promise(async resolve => {
+    accept(pandas[id].link)
+      .then(res => {
+        pandas[id].name = res.project.requester_name;
+        pandas[id].description = res.project.title;
+        pandas[id].accepted = pandas[id].accepted + 1;
 
-      if (pandas[id].alarm) {
-        sound().play();
-      }
-    })
-    .catch(res => console.log(res));
+        if (pandas[id].alarm) {
+          sound().play();
+        }
+        resolve(true);
+      })
+      .catch(async () => {
+        await sleep(delays.pre);
+        resolve(false);
+      });
+  });
 };
 
 const cycle = data => {
@@ -89,14 +95,14 @@ const cycle = data => {
     if (pandas.length > 0 && checkEnabled()) {
       if (cycling) {
         if (single) {
-          acceptPanda(data.id);
+          await acceptPanda(data.id);
           pandas[data.id].selected = true;
           send(data.id);
           await sleep(delays.cycle);
         } else {
           for (let i in pandas) {
             if (pandas[i].enabled) {
-              acceptPanda(i);
+              await acceptPanda(i);
               pandas[i].selected = true;
               send(null);
               await sleep(delays.cycle);

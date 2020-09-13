@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 
 import * as browser from "webextension-polyfill";
 
@@ -21,6 +21,10 @@ import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import PopupAppBar from "./components/PopupAppBar/PopupAppBar";
+import Empty from "./components/Empty";
+
+import DelayInput from "./components/DelayInput";
+import PreDelayInput from "./components/PreDelayInput";
 
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
@@ -29,6 +33,7 @@ import override from "./overrides";
 import style from "./styles";
 
 const Popup = props => {
+  const [delays, setDelays] = useState(props.data.delays);
   const [data, setData] = useState(props.data.pandas);
   const [cycling, setCycling] = useState(props.cycling);
   const defaultTheme = createMuiTheme();
@@ -56,7 +61,12 @@ const Popup = props => {
     };
   }, []);
 
+
+  const updateDelays = () =>
+    sendToBackground(messages.setSettingsValues, { delays });
+
   const handleCycleChange = () => {
+    updateDelays();
     sendToBackground(messages.cycle, {})
       .then(res => {
         setCycling(res);
@@ -71,16 +81,32 @@ const Popup = props => {
       setData(res.pandas)
     );
   };
+  const handleDelayChange = event => {
+    const temp = event.target.value;
+    setDelays(prev => ({ ...prev, cycle: temp }));
+  };
+  const handlePreDelayChange = event => {
+    const temp = event.target.value;
+    setDelays(prev => ({ ...prev, pre: temp }));
+  };
 
   return (
     <ThemeProvider theme={mainTheme}>
       <CssBaseline />
       <div className={classes.root}>
-        <PopupAppBar />
-        {data.length ? (
+        {data.length > 0 ? (
           <>
+            <PopupAppBar />
             <List>
               <ListItem classes={{ root: classes.cycle }} dense={true}>
+                <DelayInput
+                  data={{ value: delays.cycle, classes, disabled: cycling }}
+                  func={handleDelayChange}
+                />
+                <PreDelayInput
+                  data={{ value: delays.pre, classes, disabled: cycling }}
+                  func={handlePreDelayChange}
+                />
                 <Button
                   variant="contained"
                   color="primary"
@@ -109,7 +135,8 @@ const Popup = props => {
                       item.name
                         ? item.name
                         : item.link.match(
-                          /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks(\/accept_random|)\?ref=w_pl_prvw$/)[1]
+                          /^https:\/\/worker.mturk.com\/projects\/(.{30})\/tasks(\/accept_random|)\?ref=w_pl_prvw$/
+                        )[1]
                     }
                   />
                   <ListItemSecondaryAction className={classes.actions}>
@@ -125,7 +152,9 @@ const Popup = props => {
               ))}
             </List>{" "}
           </>
-        ) : null}
+        ) : (
+          <Empty />
+        )}
       </div>
     </ThemeProvider>
   );

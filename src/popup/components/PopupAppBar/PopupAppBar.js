@@ -29,7 +29,7 @@ const PopupAppBar = () => {
           <Typography variant="h6" className={classes.title}>
             Panda Manager
           </Typography>
-          <Tooltip title="Open">
+          <Tooltip title="Open Manager">
             <IconButton
               className={classes.main}
               onClick={() => sendToBackground(messages.openPage, "main.html")}

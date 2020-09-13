@@ -21,7 +21,8 @@ const defaults = {
     beep: 1,
     customAudio: null,
     delays: {
-      cycle: 1000
+      cycle: 1000,
+      pre: 1000,
     },
     inTab: true,
     theme: {

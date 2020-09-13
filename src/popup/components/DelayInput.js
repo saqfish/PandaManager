@@ -8,10 +8,10 @@ import DelayIcon from "@material-ui/icons/AccessTime";
 
 const DelayInput = props => {
   const handleDelayChange = props.func;
-  const { value, classes } = props.data;
+  const { value, classes, disabled } = props.data;
 
   return (
-    <Paper component="form" className={classes.delayForm} elevation={0} >
+    <Paper component="form" className={classes.delayForm} elevation={0}>
       <DelayIcon />
       <Tooltip title={"Panda Delay"}>
         <InputBase
@@ -20,6 +20,7 @@ const DelayInput = props => {
           value={value}
           onChange={handleDelayChange}
           inputProps={{ "aria-label": "Delay" }}
+          disabled={disabled}
         />
       </Tooltip>
     </Paper>

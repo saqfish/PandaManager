@@ -6,23 +6,24 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 import DelayIcon from "@material-ui/icons/AccessTime";
 
-const DelayInput = props => {
+const PreDelayInput = props => {
   const handleDelayChange = props.func;
-  const { value, classes } = props.data;
+  const { value, classes, disabled } = props.data;
 
   return (
-    <Paper component="form" className={classes.delayForm} elevation={0} >
+    <Paper component="form" className={classes.preDelayForm} elevation={0}>
       <DelayIcon />
-      <Tooltip title={"Panda Delay"}>
+      <Tooltip title={"Pre Delay"}>
         <InputBase
           className={classes.input}
-          placeholder="Delay"
+          placeholder="1000"
           value={value}
           onChange={handleDelayChange}
-          inputProps={{ "aria-label": "Delay" }}
+          inputProps={{ "aria-label": "PRE Delay" }}
+          disabled={disabled}
         />
       </Tooltip>
     </Paper>
   );
 };
-export default DelayInput;
+export default PreDelayInput;
