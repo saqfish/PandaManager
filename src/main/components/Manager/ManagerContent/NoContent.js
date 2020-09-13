@@ -8,6 +8,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Button from "@material-ui/core/Button";
 import DoneIcon from "@material-ui/icons/Done";
+import BugIcon from "@material-ui/icons/BugReport";
 
 import { useTheme } from "@material-ui/core/styles";
 import { version } from "manifest";
@@ -22,6 +23,29 @@ const NoContent = () => {
     <Box p={2} width={1}>
       <Box m={2} fontSize="h5.fontSize">
         What's new in {version}
+      </Box>
+      <List dense={true}>
+        <ListItem>
+          <ListItemAvatar>
+            <DoneIcon />
+          </ListItemAvatar>
+          <ListItemText
+            primary={"PRE delay"}
+            secondary="A delay can be set to avoid constant PRE errors"
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <BugIcon />
+          </ListItemAvatar>
+          <ListItemText
+            primary={"UI/Bug"}
+            secondary="General UI & Bug fixes"
+          />
+        </ListItem>
+      </List>
+      <Box m={2} fontSize="h5.fontSize">
+        HitForker
       </Box>
       <List dense={true}>
         <ListItem>
@@ -48,15 +72,6 @@ const NoContent = () => {
               Get Hit Forker
             </Button>
           </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <DoneIcon />
-          </ListItemAvatar>
-          <ListItemText
-            primary={"Custom Audio"}
-            secondary="A custom audio can be added under Audios in the settings menu"
-          />
         </ListItem>
       </List>
     </Box>

@@ -20,7 +20,7 @@ const Manager = props => {
   const [delays, setDelays] = useState(props.data.delays);
   const [cycling, setCycling] = useState(props.cycling);
   const [id, setID] = useState(null);
-  const [bottomBarVisible, setBottomBarVisible] = useState(false);
+  const [bottomBarVisible, setBottomBarVisible] = useState(true);
   const [dialog, setDialog] = useState({ open: false, type: null });
 
   const loadedRef = useRef(false);
