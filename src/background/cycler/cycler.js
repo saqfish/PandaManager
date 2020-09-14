@@ -46,13 +46,10 @@ const cycler = {
     pandas = p;
     delays = d;
     reloadAudio(beep, customAudio);
+    send(null);
   },
   cycling: () => cycling,
   setCycling: value => (cycling = value),
-  updatePandas: value => {
-    pandas = value;
-    send(null);
-  },
   addClient: value => clients.push(value),
   clients: () => clients,
   removeClient: value => {

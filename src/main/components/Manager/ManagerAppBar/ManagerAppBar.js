@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useContext} from "react";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -16,14 +16,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import { sendToBackground } from "miscUtils";
 import { messages } from "constants";
 
+import { ListContext } from "../../Manager/context";
+
 import style from "./styles";
 
 const useStyles = makeStyles(theme => style(theme));
 
 const ManagerAppBar = props => {
   const { data, func } = props;
-  const { setDialog, setCycling, setBottomBarVisible } = func;
-  const { title, cycling, bottomBarVisible } = data;
+  const { cycling, setCycling} = useContext(ListContext);
+  const { setDialog, setBottomBarVisible } = func;
+  const { title, bottomBarVisible } = data;
 
   const classes = useStyles();
 

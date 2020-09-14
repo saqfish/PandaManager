@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import * as browser from "webextension-polyfill";
 
@@ -17,30 +17,31 @@ import { messages } from "constants";
 
 const Manager = props => {
   const [list, setList] = useState(props.data.pandas);
-  const [delays, setDelays] = useState(props.data.delays);
+  const [delays, setDelays] = useState(props.data.delays); 
   const [cycling, setCycling] = useState(props.cycling);
   const [id, setID] = useState(null);
   const [bottomBarVisible, setBottomBarVisible] = useState(true);
   const [dialog, setDialog] = useState({ open: false, type: null });
 
-  const loadedRef = useRef(false);
-
   const updateDelays = items => {
     setDelays(items);
+    sendDelays(items);
   };
 
   const addToList = item => {
-    setList(prev => [...prev, { ...item }]);
+    let nList = [...list, { ...item }];
+    sendList(nList);
   };
 
   const removeFromList = id => {
     let nList = [...list];
     nList.splice(id, 1);
-    setList(nList);
+    sendList(nList);
   };
 
   const updateInList = (id, newItem) => {
-    setList(prev => prev.map((item, i) => (i == id ? newItem : item)));
+    let nList = list.map((item, i) => (i == id ? newItem : item));
+    sendList(nList);
   };
 
   const sendList = values =>
@@ -56,15 +57,9 @@ const Manager = props => {
     setDialog({ open: true, type: 2, data: { id, item: list[id] } });
 
   useEffect(() => {
-    if (loadedRef.current) {
-      sendList(list);
-      sendDelays(delays);
-    } else loadedRef.current = true;
-  }, [list, delays]);
-
-  useEffect(() => {
-    var port = browser.runtime.connect({ name: "pm_port" });
+    let port = browser.runtime.connect({ name: "pm_port" });
     port.onMessage.addListener(res => {
+      console.log(res);
       const { cycling, pandas, id } = res;
       setID(id);
       setCycling(cycling);
@@ -85,12 +80,14 @@ const Manager = props => {
         addToList,
         removeFromList,
         updateInList,
-        showDetails
+        showDetails,
+        sendList,
+        sendDelays
       }}
     >
       <ManagerAppBar
-        data={{ list, title: "Panda Manager", cycling, bottomBarVisible }}
-        func={{ setDialog, setCycling, setBottomBarVisible }}
+        data={{ title: "Panda Manager", bottomBarVisible }}
+        func={{ setDialog, setBottomBarVisible }}
       />
 
       <DelayContext.Provider value={{ delays, updateDelays }}>
