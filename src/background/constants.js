@@ -22,7 +22,7 @@ const defaults = {
     customAudio: null,
     delays: {
       cycle: 1000,
-      pre: 1000,
+      pre: 2000,
     },
     inTab: true,
     theme: {
