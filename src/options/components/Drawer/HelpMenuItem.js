@@ -13,7 +13,7 @@ const HelpMenuItem = () => {
       dense={true}
       button
       onClick={() => {
-        sendToBackground(messages.openDocs, 2);
+        sendToBackground(messages.openDocs, 3);
       }}
     >
       <ListItemIcon>

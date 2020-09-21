@@ -21,6 +21,7 @@ import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import PopupAppBar from "./components/PopupAppBar/PopupAppBar";
+import HelpButton from "./components/HelpButton";
 import Empty from "./components/Empty";
 
 import DelayInput from "./components/DelayInput";
@@ -115,6 +116,7 @@ const Popup = props => {
                 >
                   {cycling ? "Stop" : "Start"}
                 </Button>
+                <HelpButton/>
               </ListItem>
             </List>
             <Divider />
